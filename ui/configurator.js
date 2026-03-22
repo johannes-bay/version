@@ -143,7 +143,13 @@ export class Configurator {
     // Load custom preview module if specified in registry
     const entry = this.store.getSchemas().find(s => s.id === this.currentDesignType);
     if (entry && entry.preview) {
-      this._previewModule = await import(entry.preview);
+      try {
+        const url = new URL(entry.preview, location.href).href;
+        this._previewModule = await import(url);
+      } catch (e) {
+        console.warn('Failed to load preview module:', e);
+        this._previewModule = null;
+      }
     }
 
     // Update title
@@ -460,7 +466,8 @@ export class Configurator {
       if (entry && entry.export) {
         // Legacy: JSCAD export module
         btn.textContent = 'Loading JSCAD...';
-        const mod = await import(entry.export);
+        const exportUrl = new URL(entry.export, location.href).href;
+        const mod = await import(exportUrl);
         btn.textContent = 'Generating...';
 
         // Find the export function (first exported function)
