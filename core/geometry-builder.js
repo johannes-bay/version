@@ -352,42 +352,81 @@ export class GeometryBuilder {
 
   _merge(geos) {
     // Merge THREE.BufferGeometry array → { positions, normals, indices } for viewer
-    let totalVerts = 0;
-    let totalIdx = 0;
+    // First ensure all geometries are non-indexed with proper normals,
+    // then convert to non-indexed format for reliable merging.
+    const allPositions = [];
+    const allNormals = [];
+    const allIndices = [];
+    let vertexOffset = 0;
 
-    const parts = geos.map(g => {
-      if (!g.getIndex()) {
-        const count = g.getAttribute('position').count;
-        const idx = new Uint32Array(count);
-        for (let i = 0; i < count; i++) idx[i] = i;
-        g.setIndex(new THREE.BufferAttribute(idx, 1));
-      }
+    for (const g of geos) {
       if (!g.getAttribute('normal')) g.computeVertexNormals();
 
-      const pos = g.getAttribute('position');
-      const norm = g.getAttribute('normal');
+      const posAttr = g.getAttribute('position');
+      const normAttr = g.getAttribute('normal');
       const index = g.getIndex();
-      totalVerts += pos.count;
-      totalIdx += index.count;
-      return { pos, norm, index, count: pos.count };
-    });
 
-    const positions = new Float32Array(totalVerts * 3);
-    const normals = new Float32Array(totalVerts * 3);
-    const indices = new Uint32Array(totalIdx);
-    let vOff = 0, iOff = 0;
+      if (!posAttr || posAttr.count === 0) continue;
 
-    for (const p of parts) {
-      positions.set(p.pos.array, vOff * 3);
-      normals.set(p.norm.array, vOff * 3);
-      for (let i = 0; i < p.index.count; i++) {
-        indices[iOff + i] = p.index.array[i] + vOff;
+      // Copy position and normal arrays
+      const posArr = new Float32Array(posAttr.array);
+      const normArr = normAttr
+        ? new Float32Array(normAttr.array)
+        : new Float32Array(posAttr.count * 3);
+
+      allPositions.push(posArr);
+      allNormals.push(normArr);
+
+      // Build index array with offset
+      if (index) {
+        const idxArr = new Uint32Array(index.count);
+        for (let i = 0; i < index.count; i++) {
+          idxArr[i] = index.array[i] + vertexOffset;
+        }
+        allIndices.push(idxArr);
+      } else {
+        // Non-indexed: sequential indices
+        const idxArr = new Uint32Array(posAttr.count);
+        for (let i = 0; i < posAttr.count; i++) {
+          idxArr[i] = vertexOffset + i;
+        }
+        allIndices.push(idxArr);
       }
-      vOff += p.count;
-      iOff += p.index.count;
+
+      vertexOffset += posAttr.count;
     }
 
-    return { positions, normals, indices };
+    if (vertexOffset === 0) return null;
+
+    // Concatenate all arrays
+    const positions = new Float32Array(vertexOffset * 3);
+    const normals = new Float32Array(vertexOffset * 3);
+    let posOff = 0;
+    for (const arr of allPositions) {
+      positions.set(arr, posOff);
+      posOff += arr.length;
+    }
+    let normOff = 0;
+    for (const arr of allNormals) {
+      normals.set(arr, normOff);
+      normOff += arr.length;
+    }
+
+    let totalIdx = 0;
+    for (const arr of allIndices) totalIdx += arr.length;
+    const indices = new Uint32Array(totalIdx);
+    let idxOff = 0;
+    for (const arr of allIndices) {
+      indices.set(arr, idxOff);
+      idxOff += arr.length;
+    }
+
+    // Return as plain arrays — viewer wraps in BufferAttributes
+    return {
+      positions: Array.from(positions),
+      normals: Array.from(normals),
+      indices: Array.from(indices)
+    };
   }
 
   // ─── STL Export ──────────────────────────────────────────────
