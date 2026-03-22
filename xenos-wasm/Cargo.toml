@@ -1,0 +1,21 @@
+[package]
+name = "xenos-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "XENOS runtime compiled to WASM for the v4 parametric design platform"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# xenos-rs = { path = "../../xenos/xenos-rs" }  # Enable when wrapping real crate
+wasm-bindgen = "0.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde-wasm-bindgen = "0.6"
+js-sys = "0.3"
+console_error_panic_hook = "0.1"
+
+[profile.release]
+opt-level = "s"
+lto = true

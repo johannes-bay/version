@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "schemas": [
+    {
+      "id": "laptop-stand",
+      "name": "Laptop Stand",
+      "description": "Parametric tilted laptop stand with corner posts",
+      "schema": "./schemas/laptop-stand.json",
+      "tags": ["laptop", "ergonomic", "3d-print", "stand"],
+      "category": "accessories"
+    },
+    {
+      "id": "iso-screw",
+      "name": "ISO Metric Screw",
+      "description": "ISO 68-1 metric cap screw with helical threads",
+      "schema": "./schemas/iso-screw.json",
+      "tags": ["iso", "metric", "fastener", "thread", "screw"],
+      "category": "fasteners"
+    }
+  ]
+}

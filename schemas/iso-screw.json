@@ -1,0 +1,130 @@
+{
+  "id": "iso-screw",
+  "name": "ISO Metric Screw",
+  "version": "1.0.0",
+  "description": "ISO metric cap screw with helical threads",
+
+  "parameters": {
+    "size": {
+      "label": "Metric Size",
+      "type": "select",
+      "options": ["M3", "M4", "M5", "M6", "M8", "M10", "M12"],
+      "default": "M6",
+      "group": "thread"
+    },
+    "length": {
+      "label": "Length",
+      "type": "number",
+      "default": 20,
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "head_type": {
+      "label": "Head Type",
+      "type": "select",
+      "options": ["socket_cap", "hex", "button", "flat"],
+      "default": "socket_cap",
+      "group": "head"
+    },
+    "thread_length": {
+      "label": "Thread Length",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "mm",
+      "description": "0 = fully threaded",
+      "group": "thread"
+    },
+    "segments_per_rotation": {
+      "label": "Thread Resolution",
+      "type": "number",
+      "default": 32,
+      "min": 16,
+      "max": 64,
+      "step": 8,
+      "group": "quality"
+    }
+  },
+
+  "derived": {
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Thread pitch from ISO standard"
+    },
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Major (nominal) diameter"
+    },
+    "minor_diameter": {
+      "formula": "major_diameter - 1.22687 * pitch",
+      "description": "Minor diameter (root of thread)"
+    },
+    "pitch_diameter": {
+      "formula": "major_diameter - 0.6495 * pitch",
+      "description": "Pitch diameter"
+    },
+    "thread_depth": {
+      "formula": "0.614 * pitch",
+      "description": "Thread depth (H * 5/8)"
+    },
+    "head_diameter": {
+      "formula": "ISO_HEAD_DIA[size]",
+      "description": "Head outer diameter"
+    },
+    "head_height": {
+      "formula": "ISO_HEAD_HEIGHT[size]",
+      "description": "Head height"
+    },
+    "hex_key_size": {
+      "formula": "ISO_HEX_KEY[size]",
+      "description": "Hex key (Allen) size"
+    },
+    "actual_thread_length": {
+      "formula": "thread_length > 0 ? min(thread_length, length) : length",
+      "description": "Actual thread length (0 = fully threaded)"
+    },
+    "shank_length": {
+      "formula": "length - actual_thread_length",
+      "description": "Unthreaded shank length"
+    }
+  },
+
+  "constants": {
+    "ISO_PITCH": { "M3": 0.5, "M4": 0.7, "M5": 0.8, "M6": 1.0, "M8": 1.25, "M10": 1.5, "M12": 1.75 },
+    "ISO_MAJOR": { "M3": 3.0, "M4": 4.0, "M5": 5.0, "M6": 6.0, "M8": 8.0, "M10": 10.0, "M12": 12.0 },
+    "ISO_HEAD_DIA": { "M3": 5.5, "M4": 7.0, "M5": 8.5, "M6": 10.0, "M8": 13.0, "M10": 16.0, "M12": 18.0 },
+    "ISO_HEAD_HEIGHT": { "M3": 3.0, "M4": 4.0, "M5": 5.0, "M6": 6.0, "M8": 8.0, "M10": 10.0, "M12": 12.0 },
+    "ISO_HEX_KEY": { "M3": 2.5, "M4": 3.0, "M5": 4.0, "M6": 5.0, "M8": 6.0, "M10": 8.0, "M12": 10.0 }
+  },
+
+  "groups": {
+    "dimensions": { "label": "Dimensions", "order": 1 },
+    "thread": { "label": "Thread", "order": 2 },
+    "head": { "label": "Head", "order": 3 },
+    "quality": { "label": "Quality", "order": 4 }
+  },
+
+  "presets": {
+    "m6x20": {
+      "label": "M6x20",
+      "values": { "size": "M6", "length": 20 }
+    },
+    "m8x30": {
+      "label": "M8x30",
+      "values": { "size": "M8", "length": 30 }
+    },
+    "m4x12": {
+      "label": "M4x12",
+      "values": { "size": "M4", "length": 12 }
+    },
+    "m10x50": {
+      "label": "M10x50",
+      "values": { "size": "M10", "length": 50 }
+    }
+  }
+}

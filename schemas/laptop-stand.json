@@ -1,0 +1,164 @@
+{
+  "id": "laptop-stand",
+  "name": "Laptop Stand",
+  "version": "1.0.0",
+  "description": "Parametric tilted laptop stand with corner posts",
+
+  "parameters": {
+    "laptop_width": {
+      "label": "Laptop Width",
+      "default": 312,
+      "min": 250,
+      "max": 400,
+      "step": 1,
+      "unit": "mm",
+      "group": "laptop"
+    },
+    "laptop_depth": {
+      "label": "Laptop Depth",
+      "default": 221,
+      "min": 150,
+      "max": 300,
+      "step": 1,
+      "unit": "mm",
+      "group": "laptop"
+    },
+    "laptop_thickness": {
+      "label": "Laptop Thickness",
+      "default": 15.5,
+      "min": 8,
+      "max": 25,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "laptop"
+    },
+    "overall_height": {
+      "label": "Stand Height",
+      "default": 50,
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "mm",
+      "group": "stand"
+    },
+    "tilt_angle": {
+      "label": "Tilt Angle",
+      "default": 8,
+      "min": 0,
+      "max": 25,
+      "step": 1,
+      "unit": "deg",
+      "group": "stand"
+    },
+    "fillet_radius": {
+      "label": "Fillet Radius",
+      "default": 8,
+      "min": 0,
+      "max": 25,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "stand"
+    }
+  },
+
+  "derived": {
+    "platform_thickness": {
+      "formula": "laptop_thickness * 0.5",
+      "description": "Thickness of the tilted platform"
+    },
+    "post_diameter": {
+      "formula": "laptop_width * 0.15",
+      "description": "Diameter of corner posts"
+    },
+    "post_radius": {
+      "formula": "post_diameter / 2",
+      "description": "Radius of corner posts"
+    },
+    "post_height_above": {
+      "formula": "laptop_thickness",
+      "description": "Height posts extend above platform"
+    },
+    "tilt_radians": {
+      "formula": "tilt_angle * PI / 180",
+      "description": "Tilt angle in radians"
+    },
+    "height_difference": {
+      "formula": "tan(tilt_radians) * laptop_depth",
+      "description": "Height difference between front and back due to tilt"
+    },
+    "post_x": {
+      "formula": "laptop_width / 2",
+      "description": "X position of posts from center"
+    },
+    "post_y": {
+      "formula": "laptop_depth / 2",
+      "description": "Y position of posts from center"
+    },
+    "back_height": {
+      "formula": "overall_height + (height_difference / 2)",
+      "description": "Height of back posts"
+    },
+    "front_height": {
+      "formula": "overall_height - (height_difference / 2)",
+      "description": "Height of front posts"
+    },
+    "back_platform_top": {
+      "formula": "back_height + platform_thickness",
+      "description": "Top of platform at back"
+    },
+    "front_platform_top": {
+      "formula": "front_height + platform_thickness",
+      "description": "Top of platform at front"
+    },
+    "height_per_y": {
+      "formula": "height_difference / laptop_depth",
+      "description": "Height change per mm in Y direction"
+    }
+  },
+
+  "presets": {
+    "macbook14": {
+      "label": "MacBook 14\"",
+      "values": {
+        "laptop_width": 312,
+        "laptop_depth": 221,
+        "laptop_thickness": 15.5
+      }
+    },
+    "macbook16": {
+      "label": "MacBook 16\"",
+      "values": {
+        "laptop_width": 355,
+        "laptop_depth": 248,
+        "laptop_thickness": 16.8
+      }
+    },
+    "dell15": {
+      "label": "Dell 15\"",
+      "values": {
+        "laptop_width": 357,
+        "laptop_depth": 235,
+        "laptop_thickness": 18.5
+      }
+    },
+    "thinkpad14": {
+      "label": "ThinkPad 14\"",
+      "values": {
+        "laptop_width": 319,
+        "laptop_depth": 217,
+        "laptop_thickness": 17.9
+      }
+    }
+  },
+
+  "groups": {
+    "laptop": {
+      "label": "Laptop Dimensions",
+      "order": 1
+    },
+    "stand": {
+      "label": "Stand Settings",
+      "order": 2
+    }
+  }
+}

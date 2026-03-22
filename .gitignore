@@ -1,0 +1,4 @@
+.DS_Store
+xenos-wasm/target/
+xenos-wasm/pkg/
+node_modules/

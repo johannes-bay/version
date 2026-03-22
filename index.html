@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parametric Design Platform</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a1a; color: #fff; overflow: hidden; }
+
+    #container { display: flex; height: 100vh; }
+
+    #controls {
+      width: 340px; background: #2a2a2a; padding: 24px;
+      overflow-y: auto; border-right: 1px solid #3a3a3a;
+      display: flex; flex-direction: column;
+    }
+
+    h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .subtitle { font-size: 12px; color: #888; margin-bottom: 24px; }
+    .section { margin-bottom: 24px; }
+    .section-title, h2.section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 12px; }
+
+    .param { margin-bottom: 16px; }
+    .param label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; color: #ccc; }
+    .param label span { color: #4a9eff; font-weight: 500; }
+    .param.checkbox label { justify-content: flex-start; gap: 8px; }
+    .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .param-description { font-size: 10px; color: #888; margin-top: 4px; }
+
+    input[type="range"] { width: 100%; height: 4px; border-radius: 2px; background: #444; -webkit-appearance: none; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #4a9eff; cursor: pointer; transition: transform 0.1s; }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    input[type="checkbox"] { width: 16px; height: 16px; accent-color: #4a9eff; cursor: pointer; }
+
+    select {
+      width: 100%; padding: 10px 12px; background: #3a3a3a;
+      border: 1px solid #4a4a4a; border-radius: 6px; color: #ccc;
+      font-size: 13px; cursor: pointer; -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    select:hover { background-color: #444; border-color: #555; }
+    .param select { margin-top: 4px; }
+
+    #presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .preset-btn { flex: 1; min-width: 80px; padding: 8px 12px; background: #3a3a3a; border: 1px solid #4a4a4a; color: #ccc; border-radius: 6px; font-size: 11px; cursor: pointer; transition: all 0.2s; }
+    .preset-btn:hover { background: #4a4a4a; color: #fff; }
+
+    #generate-btn { width: 100%; padding: 14px; background: #4a9eff; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: auto; transition: background 0.2s; }
+    #generate-btn:hover:not(:disabled) { background: #3a8eef; }
+    #generate-btn:disabled { opacity: 0.6; cursor: wait; }
+
+    #derived-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #3a3a3a; }
+    #derived-values { font-size: 11px; color: #999; }
+    .derived-item { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .derived-name { color: #999; }
+    .derived-value { color: #777; font-family: monospace; }
+
+    #canvas-container { flex: 1; position: relative; }
+    canvas { display: block; }
+
+    #info { position: absolute; bottom: 20px; left: 20px; font-size: 12px; color: #999; }
+
+    #view-buttons { position: absolute; bottom: 20px; right: 20px; display: flex; gap: 4px; flex-wrap: wrap; max-width: 200px; justify-content: flex-end; }
+    .view-btn { padding: 8px 12px; min-height: 32px; background: rgba(42, 42, 42, 0.9); border: 1px solid #3a3a3a; border-radius: 4px; color: #888; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.15s; }
+    .view-btn:hover { background: rgba(60, 60, 60, 0.95); color: #ccc; border-color: #4a4a4a; }
+    .view-btn:active { background: rgba(74, 158, 255, 0.3); border-color: #4a9eff; }
+
+    #toggle-settings { position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; background: rgba(42, 42, 42, 0.95); border: 1px solid #3a3a3a; border-radius: 6px; color: #888; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    #toggle-settings:hover { background: rgba(60, 60, 60, 0.95); color: #ccc; }
+
+    #view-settings { position: absolute; top: 20px; right: 20px; background: rgba(42, 42, 42, 0.95); border-radius: 8px; padding: 16px; min-width: 200px; border: 1px solid #3a3a3a; }
+    #view-settings.hidden { display: none; }
+    #view-settings .section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 12px; }
+    .view-param { margin-bottom: 12px; }
+    .view-param label { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; color: #aaa; }
+    .view-param label span { color: #4a9eff; font-family: monospace; font-size: 10px; }
+    .view-param input[type="range"] { width: 100%; height: 3px; }
+    .view-param input[type="color"] { width: 100%; height: 24px; border: none; border-radius: 4px; cursor: pointer; background: transparent; }
+    .view-param input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    .view-param input[type="color"]::-webkit-color-swatch { border: 1px solid #4a4a4a; border-radius: 4px; }
+
+    #controls::-webkit-scrollbar { width: 8px; }
+    #controls::-webkit-scrollbar-track { background: #2a2a2a; }
+    #controls::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+
+    @media (max-width: 768px) {
+      #container { flex-direction: column; }
+      #controls { width: 100%; max-height: 50vh; border-right: none; border-bottom: 1px solid #3a3a3a; }
+      #canvas-container { flex: 1; min-height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="controls">
+      <h1>Laptop Stand</h1>
+      <p class="subtitle">Parametric 3D-printable design</p>
+
+      <section class="section">
+        <h2 class="section-title">Design Type</h2>
+        <select id="design-type-select"></select>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Presets</h2>
+        <div id="presets"></div>
+      </section>
+
+      <div id="parameters"></div>
+
+      <section id="derived-section">
+        <h2 class="section-title">Computed Values</h2>
+        <div id="derived-values"></div>
+      </section>
+
+      <button id="generate-btn">Generate STL</button>
+    </div>
+
+    <div id="canvas-container">
+      <div id="info">Drag to rotate | Scroll to zoom | Right-drag to pan</div>
+      <div id="view-buttons">
+        <button class="view-btn" data-view="front">Front</button>
+        <button class="view-btn" data-view="back">Back</button>
+        <button class="view-btn" data-view="left">Left</button>
+        <button class="view-btn" data-view="right">Right</button>
+        <button class="view-btn" data-view="top">Top</button>
+        <button class="view-btn" data-view="bottom">Bottom</button>
+        <button class="view-btn" data-view="iso">Iso</button>
+        <button class="view-btn" id="fit-btn">Fit</button>
+      </div>
+
+      <button id="toggle-settings" title="View Settings">&#9881;</button>
+      <div id="view-settings" class="hidden">
+        <h2 class="section-title">View Settings</h2>
+        <div class="view-param">
+          <label for="model-color">Color</label>
+          <input type="color" id="model-color" value="#f0ece4">
+        </div>
+        <div class="view-param">
+          <label for="roughness">Roughness <span id="roughness-val">0.60</span></label>
+          <input type="range" id="roughness" min="0" max="1" step="0.05" value="0.6">
+        </div>
+        <div class="view-param">
+          <label for="metalness">Metalness <span id="metalness-val">0.0</span></label>
+          <input type="range" id="metalness" min="0" max="1" step="0.05" value="0.0">
+        </div>
+        <div class="view-param">
+          <label for="key-light">Key Light <span id="key-light-val">0.2</span></label>
+          <input type="range" id="key-light" min="0" max="2" step="0.1" value="0.2">
+        </div>
+        <div class="view-param">
+          <label for="ambient">Ambient <span id="ambient-val">0.1</span></label>
+          <input type="range" id="ambient" min="0" max="2" step="0.1" value="0.1">
+        </div>
+        <div class="view-param">
+          <label for="exposure">Exposure <span id="exposure-val">1.0</span></label>
+          <input type="range" id="exposure" min="0.5" max="2.5" step="0.1" value="1.0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+  <script type="module" src="./ui/configurator.js"></script>
+</body>
+</html>
