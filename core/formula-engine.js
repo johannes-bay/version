@@ -254,7 +254,44 @@ export class FormulaEngine {
       }
     }
 
+    // Register geometry primitives as entities
+    const knownNames = Object.keys(entityMap);
+    const geometry = schema.geometry || {};
+    for (const [geoName, geoDef] of Object.entries(geometry)) {
+      const geoEntity = xenos.entity(`${schemaId}:geo:${geoName}`);
+      xenos.relate(geoEntity, schemaEntity, 'institutional', 'mutual');
+
+      // Relate geometry to the dimensions it references
+      const dimRefs = this._extractRefs(geoDef, knownNames);
+      for (const ref of dimRefs) {
+        if (entityMap[ref] !== undefined) {
+          xenos.relate(geoEntity, entityMap[ref], 'experiential', 'extractive');
+        }
+      }
+    }
+
     return entityMap;
+  }
+
+  /**
+   * Extract parameter/derived references from a geometry definition.
+   * Scans all string values for known names.
+   */
+  _extractRefs(obj, knownNames) {
+    const refs = new Set();
+    const scan = (val) => {
+      if (typeof val === 'string') {
+        for (const name of knownNames) {
+          if (val === name || val.includes(name)) refs.add(name);
+        }
+      } else if (Array.isArray(val)) {
+        val.forEach(scan);
+      } else if (val && typeof val === 'object') {
+        Object.values(val).forEach(scan);
+      }
+    };
+    scan(obj);
+    return refs;
   }
 }
 

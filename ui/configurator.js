@@ -8,8 +8,7 @@ import { FormulaEngine } from '../core/formula-engine.js';
 import { ThreeViewer } from './three-viewer.js';
 import { XenosBridge } from '../core/xenos-bridge.js';
 import { SchemaStore } from '../core/schema-store.js';
-import { createLaptopStandShader } from '../geometry/laptop-stand-shader.js';
-import { createISOScrewPreview } from '../geometry/iso-screw-preview.js';
+import { GeometryBuilder } from '../core/geometry-builder.js';
 
 export class Configurator {
   constructor() {
@@ -33,11 +32,14 @@ export class Configurator {
     this.lerpSpeed = 0.15;
     this.animationFrame = null;
 
-    // v4.1: XENOS graph + persistence
+    // v4.1: XENOS graph + persistence + declarative geometry
     this.xenos = null;
     this.store = null;
+    this.geometryBuilder = new GeometryBuilder();
     this.entityMap = {};
     this.currentEncounter = null;
+    this._previewModule = null;  // cached custom preview module
+    this._exportModule = null;   // cached custom export module
     this._saveParamsTimer = null;
 
     this.init();
@@ -90,12 +92,14 @@ export class Configurator {
     this.currentDesignType = newType;
     this.lastComputedHash = null;
 
-    // Clear shader mesh when switching
+    // Clear preview state when switching
     if (this.shaderMesh) {
       this.viewer.clearMesh();
       this.shaderMesh = null;
       this.shaderUpdate = null;
     }
+    this._previewModule = null;
+    this._exportModule = null;
 
     await this.loadSchema();
     this.rebuildUI();
@@ -134,6 +138,12 @@ export class Configurator {
       if (entityIds.length > 0) {
         this.currentEncounter = this.xenos.encounter(entityIds, 'familiar');
       }
+    }
+
+    // Load custom preview module if specified in registry
+    const entry = this.store.getSchemas().find(s => s.id === this.currentDesignType);
+    if (entry && entry.preview) {
+      this._previewModule = await import(entry.preview);
     }
 
     // Update title
@@ -207,33 +217,42 @@ export class Configurator {
 
   /**
    * Rebuild preview geometry.
-   * Laptop stand: shader uniforms (zero geometry recompute, GPU-driven).
-   * ISO screw: Three.js primitives rebuilt (instant JS, no JSCAD).
+   * Dispatches based on registry:
+   *   - Custom shader module → update uniforms (GPU-driven)
+   *   - Custom primitive module → rebuild geometry
+   *   - Declarative geometry in schema → use geometry builder
    */
   rebuildPreview(computed) {
     if (!computed) {
       computed = this.formulaEngine.evaluate(this.schema, this.displayParams);
     }
 
-    if (this.currentDesignType === 'laptop-stand') {
-      // Shader approach: just update uniforms (no geometry rebuild)
-      if (!this.shaderMesh) {
-        const { mesh, updateParams } = createLaptopStandShader();
-        this.shaderMesh = mesh;
-        this.shaderUpdate = updateParams;
-        this.viewer.setMesh(mesh, true);
+    if (this._previewModule) {
+      // Legacy custom preview module
+      if (this._previewModule.createLaptopStandShader) {
+        // Shader strategy: build once, then update uniforms
+        if (!this.shaderMesh) {
+          const { mesh, updateParams } = this._previewModule.createLaptopStandShader();
+          this.shaderMesh = mesh;
+          this.shaderUpdate = updateParams;
+          this.viewer.setMesh(mesh, true);
+        }
+        this.shaderUpdate(computed);
+      } else if (this._previewModule.createISOScrewPreview) {
+        // Primitive strategy: rebuild on change
+        const hash = JSON.stringify(computed);
+        if (hash === this.lastComputedHash) return;
+        this.lastComputedHash = hash;
+        const geoData = this._previewModule.createISOScrewPreview(computed);
+        if (geoData) this.viewer.updateModel(geoData, false);
       }
-      this.shaderUpdate(computed);
-    } else if (this.currentDesignType === 'iso-screw') {
-      // Primitive approach for screw (topology changes with params)
+    } else if (this.schema.geometry) {
+      // Declarative geometry — generic builder
       const hash = JSON.stringify(computed);
       if (hash === this.lastComputedHash) return;
       this.lastComputedHash = hash;
-
-      const geometryData = createISOScrewPreview(computed);
-      if (geometryData) {
-        this.viewer.updateModel(geometryData, false);
-      }
+      const geoData = this.geometryBuilder.build(this.schema.geometry, computed);
+      if (geoData) this.viewer.updateModel(geoData, false);
     }
   }
 
@@ -424,45 +443,54 @@ export class Configurator {
   }
 
   /**
-   * Export STL - this is the only place JSCAD is loaded.
-   * Lazy-loads the JSCAD geometry module on first export.
+   * Export STL.
+   * Legacy designs: lazy-load JSCAD module.
+   * Declarative designs: serialize geometry builder output directly (no JSCAD).
    */
   async exportSTL() {
     const btn = document.getElementById('generate-btn');
-    btn.textContent = 'Loading JSCAD...';
     btn.disabled = true;
 
     try {
       const computed = this.formulaEngine.evaluate(this.schema, this.currentParams);
-      let jscadGeometry;
-
-      // Dynamically import the accurate JSCAD geometry module
-      if (this.currentDesignType === 'laptop-stand') {
-        const { createLaptopStand } = await import('../geometry/laptop-stand.js');
-        btn.textContent = 'Generating...';
-        jscadGeometry = await createLaptopStand(computed);
-      } else if (this.currentDesignType === 'iso-screw') {
-        const { createISOScrew } = await import('../geometry/iso-screw.js');
-        btn.textContent = 'Generating...';
-        jscadGeometry = await createISOScrew(computed);
-      }
-
-      // Serialize to STL
-      const { serialize } = await import('https://cdn.jsdelivr.net/npm/@jscad/stl-serializer@2.1.17/+esm');
-      const rawData = serialize({ binary: true }, jscadGeometry);
-
       let stlData;
-      if (rawData.length === 1) {
-        stlData = rawData[0];
-      } else {
-        const totalLength = rawData.reduce((acc, buf) => acc + buf.byteLength, 0);
-        const result = new Uint8Array(totalLength);
-        let offset = 0;
-        for (const buffer of rawData) {
-          result.set(new Uint8Array(buffer), offset);
-          offset += buffer.byteLength;
+
+      const entry = this.store.getSchemas().find(s => s.id === this.currentDesignType);
+
+      if (entry && entry.export) {
+        // Legacy: JSCAD export module
+        btn.textContent = 'Loading JSCAD...';
+        const mod = await import(entry.export);
+        btn.textContent = 'Generating...';
+
+        // Find the export function (first exported function)
+        const exportFn = Object.values(mod).find(v => typeof v === 'function');
+        const jscadGeometry = await exportFn(computed);
+
+        const { serialize } = await import('https://cdn.jsdelivr.net/npm/@jscad/stl-serializer@2.1.17/+esm');
+        const rawData = serialize({ binary: true }, jscadGeometry);
+
+        if (rawData.length === 1) {
+          stlData = rawData[0];
+        } else {
+          const totalLength = rawData.reduce((acc, buf) => acc + buf.byteLength, 0);
+          const result = new Uint8Array(totalLength);
+          let offset = 0;
+          for (const buffer of rawData) {
+            result.set(new Uint8Array(buffer), offset);
+            offset += buffer.byteLength;
+          }
+          stlData = result.buffer;
         }
-        stlData = result.buffer;
+      } else if (this.schema.geometry) {
+        // Declarative: build geometry and serialize directly to STL
+        btn.textContent = 'Generating...';
+        const geoData = this.geometryBuilder.build(this.schema.geometry, computed);
+        stlData = GeometryBuilder.toSTL(geoData);
+      } else {
+        btn.textContent = 'No export available';
+        setTimeout(() => { btn.textContent = 'Generate STL'; }, 2000);
+        return;
       }
 
       // Download

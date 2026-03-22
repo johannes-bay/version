@@ -1,11 +1,13 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "schemas": [
     {
       "id": "laptop-stand",
       "name": "Laptop Stand",
       "description": "Parametric tilted laptop stand with corner posts",
       "schema": "./schemas/laptop-stand.json",
+      "preview": "./geometry/laptop-stand-shader.js",
+      "export": "./geometry/laptop-stand.js",
       "tags": ["laptop", "ergonomic", "3d-print", "stand"],
       "category": "accessories"
     },
@@ -14,8 +16,34 @@
       "name": "ISO Metric Screw",
       "description": "ISO 68-1 metric cap screw with helical threads",
       "schema": "./schemas/iso-screw.json",
+      "preview": "./geometry/iso-screw-preview.js",
+      "export": "./geometry/iso-screw.js",
       "tags": ["iso", "metric", "fastener", "thread", "screw"],
       "category": "fasteners"
+    },
+    {
+      "id": "hex-nut",
+      "name": "ISO Hex Nut",
+      "description": "ISO 4032 hexagonal nut",
+      "schema": "./schemas/hex-nut.json",
+      "tags": ["iso", "metric", "fastener", "nut", "hex"],
+      "category": "fasteners"
+    },
+    {
+      "id": "enclosure",
+      "name": "Parametric Enclosure",
+      "description": "Open-top box enclosure with optional lid",
+      "schema": "./schemas/enclosure.json",
+      "tags": ["box", "enclosure", "electronics", "3d-print"],
+      "category": "enclosures"
+    },
+    {
+      "id": "shelf-bracket",
+      "name": "Shelf Bracket",
+      "description": "L-shaped shelf bracket with optional diagonal gusset",
+      "schema": "./schemas/shelf-bracket.json",
+      "tags": ["bracket", "shelf", "structural", "mount"],
+      "category": "structural"
     }
   ]
 }

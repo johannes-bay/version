@@ -3,7 +3,7 @@
  * Cache-first strategy for full offline support.
  */
 
-const CACHE_NAME = 'v4-cache-v1';
+const CACHE_NAME = 'v4-cache-v2';
 
 const PRECACHE_URLS = [
   './',
@@ -13,9 +13,13 @@ const PRECACHE_URLS = [
   './core/formula-engine.js',
   './core/xenos-bridge.js',
   './core/schema-store.js',
+  './core/geometry-builder.js',
   './schemas/registry.json',
   './schemas/laptop-stand.json',
   './schemas/iso-screw.json',
+  './schemas/hex-nut.json',
+  './schemas/enclosure.json',
+  './schemas/shelf-bracket.json',
   './geometry/laptop-stand-shader.js',
   './geometry/laptop-stand-preview.js',
   './geometry/iso-screw-preview.js',

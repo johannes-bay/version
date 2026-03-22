@@ -1,0 +1,87 @@
+{
+  "id": "enclosure",
+  "name": "Parametric Enclosure",
+  "version": "1.0.0",
+  "description": "Open-top box enclosure with optional lid",
+
+  "parameters": {
+    "inner_width": {
+      "label": "Inner Width", "default": 60, "min": 20, "max": 200,
+      "step": 1, "unit": "mm", "group": "inner"
+    },
+    "inner_depth": {
+      "label": "Inner Depth", "default": 40, "min": 20, "max": 200,
+      "step": 1, "unit": "mm", "group": "inner"
+    },
+    "inner_height": {
+      "label": "Inner Height", "default": 30, "min": 10, "max": 150,
+      "step": 1, "unit": "mm", "group": "inner"
+    },
+    "wall_thickness": {
+      "label": "Wall Thickness", "default": 2, "min": 1, "max": 8,
+      "step": 0.5, "unit": "mm", "group": "construction"
+    },
+    "lid": {
+      "label": "Show Lid", "type": "boolean", "default": true,
+      "group": "construction"
+    }
+  },
+
+  "derived": {
+    "outer_width": {
+      "formula": "inner_width + 2 * wall_thickness",
+      "description": "Total outer width"
+    },
+    "outer_depth": {
+      "formula": "inner_depth + 2 * wall_thickness",
+      "description": "Total outer depth"
+    },
+    "outer_height": {
+      "formula": "inner_height + wall_thickness",
+      "description": "Box height (bottom + walls, no lid)"
+    },
+    "lid_height": {
+      "formula": "wall_thickness",
+      "description": "Lid thickness"
+    }
+  },
+
+  "geometry": {
+    "box": {
+      "type": "box",
+      "width": "outer_width",
+      "depth": "outer_depth",
+      "height": "outer_height",
+      "shell": "wall_thickness",
+      "position": [0, "outer_height / 2", 0]
+    },
+    "lid": {
+      "type": "box",
+      "width": "outer_width",
+      "depth": "outer_depth",
+      "height": "lid_height",
+      "position": [0, "outer_height + 1 + lid_height / 2", 0],
+      "visible": "lid"
+    }
+  },
+
+  "groups": {
+    "inner": { "label": "Inner Dimensions", "order": 1 },
+    "construction": { "label": "Construction", "order": 2 }
+  },
+
+  "presets": {
+    "small": {
+      "label": "Small (60x40x30)",
+      "values": { "inner_width": 60, "inner_depth": 40, "inner_height": 30 }
+    },
+    "medium": {
+      "label": "Medium (100x60x50)",
+      "values": { "inner_width": 100, "inner_depth": 60, "inner_height": 50 }
+    },
+    "large": {
+      "label": "Large (150x100x80)",
+      "values": { "inner_width": 150, "inner_depth": 100, "inner_height": 80 }
+    }
+  }
+}
