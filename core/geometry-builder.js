@@ -25,16 +25,20 @@ export class GeometryBuilder {
         if (!vis) continue;
       }
 
-      const geo = this._createGeometry(def, computed);
-      if (!geo) continue;
+      try {
+        const geo = this._createGeometry(def, computed);
+        if (!geo) continue;
 
-      // Apply rotation before position
-      this._applyTransform(geo, def, computed);
-      geometries.push(geo);
+        // Apply rotation before position
+        this._applyTransform(geo, def, computed);
+        geometries.push(geo);
 
-      // Mirror pattern — duplicate across axes
-      if (def.mirror) {
-        geometries.push(...this._createMirrors(geo, def.mirror));
+        // Mirror pattern — duplicate across axes
+        if (def.mirror) {
+          geometries.push(...this._createMirrors(geo, def.mirror));
+        }
+      } catch (e) {
+        console.error(`GeometryBuilder: failed to build "${id}":`, e);
       }
     }
 

@@ -257,8 +257,12 @@ export class Configurator {
       const hash = JSON.stringify(computed);
       if (hash === this.lastComputedHash) return;
       this.lastComputedHash = hash;
-      const geoData = this.geometryBuilder.build(this.schema.geometry, computed);
-      if (geoData) this.viewer.updateModel(geoData, false);
+      try {
+        const geoData = this.geometryBuilder.build(this.schema.geometry, computed);
+        if (geoData) this.viewer.updateModel(geoData, false);
+      } catch (e) {
+        console.error('Geometry build failed:', e);
+      }
     }
   }
 
