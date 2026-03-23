@@ -1,0 +1,100 @@
+{
+  "id": "shoulder-spacer",
+  "name": "Shoulder Spacer",
+  "version": "1.0.0",
+  "description": "Flanged shoulder spacer",
+  "parameters": {
+    "od": {
+      "label": "OD",
+      "default": 10,
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "id_dim": {
+      "label": "ID",
+      "default": 5,
+      "min": 2,
+      "max": 20,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "spacer_length": {
+      "label": "Length",
+      "default": 10,
+      "min": 2,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "flange_od": {
+      "label": "Flange OD",
+      "default": 15,
+      "min": 6,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "flange_t": {
+      "label": "Flange Thickness",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 5,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    },
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    },
+    "flange_radius": {
+      "formula": "flange_od / 2",
+      "description": "Flange radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "spacer_length",
+      "bore": "inner_radius",
+      "segments": 32
+    },
+    "flange": {
+      "type": "cylinder",
+      "radius": "flange_radius",
+      "height": "flange_t",
+      "bore": "inner_radius",
+      "segments": 32,
+      "position": [
+        0,
+        "spacer_length / 2 + flange_t / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

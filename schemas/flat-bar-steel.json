@@ -1,0 +1,56 @@
+{
+  "id": "flat-bar-steel",
+  "name": "Steel Flat Bar",
+  "version": "1.0.0",
+  "description": "Hot-rolled steel flat bar",
+  "parameters": {
+    "bar_width": {
+      "label": "Width",
+      "default": 25,
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "bar_thickness": {
+      "label": "Thickness",
+      "default": 3,
+      "min": 1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 100,
+      "min": 10,
+      "max": 500,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {},
+  "geometry": {
+    "body": {
+      "type": "box",
+      "width": "bar_width",
+      "depth": "bar_thickness",
+      "height": "length"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

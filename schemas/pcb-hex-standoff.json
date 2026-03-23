@@ -1,0 +1,90 @@
+{
+  "id": "pcb-hex-standoff",
+  "name": "PCB Hex Standoff",
+  "version": "1.0.0",
+  "description": "Brass hex PCB standoff",
+  "parameters": {
+    "af": {
+      "label": "Across Flats",
+      "default": 5,
+      "min": 3,
+      "max": 12,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "thread": {
+      "label": "Thread",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4"
+      ],
+      "default": "M3",
+      "group": "dimensions"
+    },
+    "standoff_length": {
+      "label": "Length",
+      "default": 8,
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "radius": {
+      "formula": "af / sqrt(3)",
+      "description": "Circumscribed radius"
+    },
+    "bore_radius": {
+      "formula": "ISO_MAJOR[thread] / 2",
+      "description": "Bore radius"
+    },
+    "pitch": {
+      "formula": "ISO_PITCH[thread]",
+      "description": "Thread pitch"
+    }
+  },
+  "constants": {
+    "ISO_MAJOR": {
+      "M2": 2.0,
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0
+    },
+    "ISO_PITCH": {
+      "M2": 0.4,
+      "M2.5": 0.45,
+      "M3": 0.5,
+      "M4": 0.7
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "radius",
+      "height": "standoff_length",
+      "bore": "bore_radius"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m3x8": {
+      "label": "M3x8",
+      "values": {
+        "thread": "M3",
+        "standoff_length": 8
+      }
+    }
+  }
+}

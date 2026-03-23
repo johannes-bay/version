@@ -1,0 +1,51 @@
+{
+  "id": "round-bar-aluminum",
+  "name": "Aluminum Round Bar",
+  "version": "1.0.0",
+  "description": "6061-T6 aluminum round bar",
+  "parameters": {
+    "diameter": {
+      "label": "Diameter",
+      "default": 10,
+      "min": 2,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 50,
+      "min": 10,
+      "max": 300,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "radius": {
+      "formula": "diameter / 2",
+      "description": "Radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "radius",
+      "height": "length"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

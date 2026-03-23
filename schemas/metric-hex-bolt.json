@@ -1,0 +1,168 @@
+{
+  "id": "metric-hex-bolt",
+  "name": "Metric Hex Bolt",
+  "version": "1.0.0",
+  "description": "ISO 4014 hex head bolt",
+  "parameters": {
+    "size": {
+      "label": "Metric Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12",
+        "M16",
+        "M20"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 20,
+      "min": 5,
+      "max": 150,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Thread pitch"
+    },
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Nominal diameter"
+    },
+    "shank_radius": {
+      "formula": "major_diameter / 2",
+      "description": "Shank radius"
+    },
+    "head_diameter": {
+      "formula": "HEAD_DIA[size]",
+      "description": "Head diameter"
+    },
+    "head_radius": {
+      "formula": "head_diameter / 2",
+      "description": "Head radius"
+    },
+    "head_height": {
+      "formula": "HEAD_HEIGHT[size]",
+      "description": "Head height"
+    }
+  },
+  "constants": {
+    "ISO_PITCH": {
+      "M2": 0.4,
+      "M2.5": 0.45,
+      "M3": 0.5,
+      "M4": 0.7,
+      "M5": 0.8,
+      "M6": 1.0,
+      "M8": 1.25,
+      "M10": 1.5,
+      "M12": 1.75,
+      "M16": 2.0,
+      "M20": 2.5
+    },
+    "ISO_MAJOR": {
+      "M2": 2.0,
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0,
+      "M8": 8.0,
+      "M10": 10.0,
+      "M12": 12.0,
+      "M16": 16.0,
+      "M20": 20.0
+    },
+    "HEAD_DIA": {
+      "M2": 4.0,
+      "M2.5": 5.0,
+      "M3": 5.5,
+      "M4": 7.0,
+      "M5": 8.0,
+      "M6": 10.0,
+      "M8": 13.0,
+      "M10": 16.0,
+      "M12": 18.0,
+      "M16": 24.0,
+      "M20": 30.0
+    },
+    "HEAD_HEIGHT": {
+      "M2": 1.4,
+      "M2.5": 1.7,
+      "M3": 2.0,
+      "M4": 2.8,
+      "M5": 3.5,
+      "M6": 4.0,
+      "M8": 5.3,
+      "M10": 6.4,
+      "M12": 7.5,
+      "M16": 10.0,
+      "M20": 12.5
+    }
+  },
+  "geometry": {
+    "shank": {
+      "type": "cylinder",
+      "radius": "shank_radius",
+      "height": "length",
+      "position": [
+        0,
+        "-length / 2",
+        0
+      ]
+    },
+    "head": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "head_diameter / sqrt(3)",
+      "height": "head_height",
+      "position": [
+        0,
+        "head_height / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m6x20": {
+      "label": "M6x20",
+      "values": {
+        "size": "M6",
+        "length": 20
+      }
+    },
+    "m8x30": {
+      "label": "M8x30",
+      "values": {
+        "size": "M8",
+        "length": 30
+      }
+    },
+    "m10x40": {
+      "label": "M10x40",
+      "values": {
+        "size": "M10",
+        "length": 40
+      }
+    }
+  }
+}

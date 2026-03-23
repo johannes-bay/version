@@ -1,0 +1,123 @@
+{
+  "id": "inch-socket-head-screw",
+  "name": "Inch Socket Head Cap Screw",
+  "version": "1.0.0",
+  "description": "Inch SHCS (UNC)",
+  "parameters": {
+    "size": {
+      "label": "Size",
+      "type": "select",
+      "options": [
+        "#4",
+        "#6",
+        "#8",
+        "#10",
+        "1/4",
+        "5/16",
+        "3/8",
+        "7/16",
+        "1/2",
+        "5/8",
+        "3/4"
+      ],
+      "default": "1/4",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 20,
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "major_diameter": {
+      "formula": "INCH_MAJOR[size]",
+      "description": "Diameter"
+    },
+    "radius": {
+      "formula": "major_diameter / 2",
+      "description": "Radius"
+    },
+    "head_radius": {
+      "formula": "major_diameter * 0.75",
+      "description": "Head radius"
+    },
+    "head_height": {
+      "formula": "major_diameter",
+      "description": "Head height"
+    },
+    "pitch": {
+      "formula": "INCH_PITCH[size]",
+      "description": "Pitch"
+    }
+  },
+  "constants": {
+    "INCH_MAJOR": {
+      "#4": 2.845,
+      "#6": 3.505,
+      "#8": 4.166,
+      "#10": 4.826,
+      "1/4": 6.35,
+      "5/16": 7.938,
+      "3/8": 9.525,
+      "7/16": 11.112,
+      "1/2": 12.7,
+      "5/8": 15.875,
+      "3/4": 19.05
+    },
+    "INCH_PITCH": {
+      "#4": 0.635,
+      "#6": 0.794,
+      "#8": 0.794,
+      "#10": 1.058,
+      "1/4": 1.27,
+      "5/16": 1.411,
+      "3/8": 1.588,
+      "7/16": 1.814,
+      "1/2": 1.954,
+      "5/8": 2.309,
+      "3/4": 2.54
+    }
+  },
+  "geometry": {
+    "shank": {
+      "type": "cylinder",
+      "radius": "radius",
+      "height": "length",
+      "position": [
+        0,
+        "-length / 2",
+        0
+      ]
+    },
+    "head": {
+      "type": "cylinder",
+      "radius": "head_radius",
+      "height": "head_height",
+      "position": [
+        0,
+        "head_height / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "q1": {
+      "label": "1/4x20",
+      "values": {
+        "size": "1/4",
+        "length": 20
+      }
+    }
+  }
+}

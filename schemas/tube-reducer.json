@@ -1,0 +1,68 @@
+{
+  "id": "tube-reducer",
+  "name": "Tube Reducer",
+  "version": "1.0.0",
+  "description": "Tube size reducer",
+  "parameters": {
+    "od_large": {
+      "label": "Large OD",
+      "default": 20,
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "od_small": {
+      "label": "Small OD",
+      "default": 10,
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "reducer_length": {
+      "label": "Length",
+      "default": 25,
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "large_radius": {
+      "formula": "od_large / 2",
+      "description": "Large end radius"
+    },
+    "small_radius": {
+      "formula": "od_small / 2",
+      "description": "Small end radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cone",
+      "radiusTop": "small_radius",
+      "radiusBottom": "large_radius",
+      "height": "reducer_length"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "20\u219210",
+      "values": {
+        "od_large": 20,
+        "od_small": 10
+      }
+    }
+  }
+}

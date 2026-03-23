@@ -1,0 +1,100 @@
+{
+  "id": "metric-set-screw-cup",
+  "name": "Metric Set Screw (Cup Point)",
+  "version": "1.0.0",
+  "description": "ISO 4029 cup point set screw",
+  "parameters": {
+    "size": {
+      "label": "Metric Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12",
+        "M16",
+        "M20"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 10,
+      "min": 3,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Diameter"
+    },
+    "radius": {
+      "formula": "major_diameter / 2",
+      "description": "Radius"
+    },
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Pitch"
+    }
+  },
+  "constants": {
+    "ISO_MAJOR": {
+      "M2": 2.0,
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0,
+      "M8": 8.0,
+      "M10": 10.0,
+      "M12": 12.0,
+      "M16": 16.0,
+      "M20": 20.0
+    },
+    "ISO_PITCH": {
+      "M2": 0.4,
+      "M2.5": 0.45,
+      "M3": 0.5,
+      "M4": 0.7,
+      "M5": 0.8,
+      "M6": 1.0,
+      "M8": 1.25,
+      "M10": 1.5,
+      "M12": 1.75,
+      "M16": 2.0,
+      "M20": 2.5
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "radius",
+      "height": "length"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m6x10": {
+      "label": "M6x10",
+      "values": {
+        "size": "M6",
+        "length": 10
+      }
+    }
+  }
+}

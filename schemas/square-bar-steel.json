@@ -1,0 +1,47 @@
+{
+  "id": "square-bar-steel",
+  "name": "Steel Square Bar",
+  "version": "1.0.0",
+  "description": "Cold-rolled steel square bar",
+  "parameters": {
+    "side": {
+      "label": "Side Length",
+      "default": 10,
+      "min": 3,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 50,
+      "min": 10,
+      "max": 300,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {},
+  "geometry": {
+    "body": {
+      "type": "box",
+      "width": "side",
+      "depth": "side",
+      "height": "length"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

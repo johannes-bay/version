@@ -1,0 +1,125 @@
+{
+  "id": "metric-spring-lock-washer",
+  "name": "Metric Spring Lock Washer",
+  "version": "1.0.0",
+  "description": "DIN 127 spring lock washer",
+  "parameters": {
+    "size": {
+      "label": "Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12",
+        "M16",
+        "M20"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "washer_id": {
+      "formula": "WASHER_ID[size]",
+      "description": "Inner diameter"
+    },
+    "washer_od": {
+      "formula": "WASHER_OD[size]",
+      "description": "Outer diameter"
+    },
+    "thickness": {
+      "formula": "WASHER_T[size]",
+      "description": "Thickness"
+    },
+    "inner_radius": {
+      "formula": "washer_id / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "washer_od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "constants": {
+    "WASHER_ID": {
+      "M2": 2.2,
+      "M2.5": 2.7,
+      "M3": 3.2,
+      "M4": 4.3,
+      "M5": 5.3,
+      "M6": 6.4,
+      "M8": 8.4,
+      "M10": 10.5,
+      "M12": 13.0,
+      "M16": 17.0,
+      "M20": 21.0
+    },
+    "WASHER_OD": {
+      "M2": 3.5,
+      "M2.5": 4.2,
+      "M3": 4.9,
+      "M4": 6.3,
+      "M5": 7.0,
+      "M6": 8.4,
+      "M8": 11.2,
+      "M10": 14.0,
+      "M12": 16.8,
+      "M16": 21.0,
+      "M20": 25.9
+    },
+    "WASHER_T": {
+      "M2": 0.6,
+      "M2.5": 1.0,
+      "M3": 1.0,
+      "M4": 1.6,
+      "M5": 2.0,
+      "M6": 3.2,
+      "M8": 3.2,
+      "M10": 4.0,
+      "M12": 5.0,
+      "M16": 6.0,
+      "M20": 6.0
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "thickness",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "p2": {
+      "label": "M3",
+      "values": {
+        "size": "M3"
+      }
+    },
+    "p5": {
+      "label": "M6",
+      "values": {
+        "size": "M6"
+      }
+    },
+    "p8": {
+      "label": "M12",
+      "values": {
+        "size": "M12"
+      }
+    }
+  }
+}

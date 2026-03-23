@@ -1,0 +1,66 @@
+{
+  "id": "shaft-sleeve",
+  "name": "Shaft Sleeve",
+  "version": "1.0.0",
+  "description": "Precision shaft sleeve adapter",
+  "parameters": {
+    "id_dim": {
+      "label": "Inner Diameter",
+      "default": 8,
+      "min": 3,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "od": {
+      "label": "Outer Diameter",
+      "default": 12,
+      "min": 5,
+      "max": 40,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "sleeve_length": {
+      "label": "Length",
+      "default": 20,
+      "min": 5,
+      "max": 80,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "sleeve_length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "8x12x20",
+      "values": {}
+    }
+  }
+}

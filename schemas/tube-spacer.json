@@ -1,0 +1,66 @@
+{
+  "id": "tube-spacer",
+  "name": "Tube Spacer",
+  "version": "1.0.0",
+  "description": "Precision tube spacer",
+  "parameters": {
+    "od": {
+      "label": "OD",
+      "default": 12,
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "id_dim": {
+      "label": "ID",
+      "default": 6,
+      "min": 2,
+      "max": 25,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "spacer_length": {
+      "label": "Length",
+      "default": 5,
+      "min": 1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    },
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "spacer_length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "12x6x5",
+      "values": {}
+    }
+  }
+}

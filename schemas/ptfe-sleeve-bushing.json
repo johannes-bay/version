@@ -1,0 +1,99 @@
+{
+  "id": "ptfe-sleeve-bushing",
+  "name": "Ptfe Sleeve Bushing",
+  "version": "1.0.0",
+  "description": "Ptfe Sleeve plain bearing bushing",
+  "parameters": {
+    "size": {
+      "label": "Size (IDxOD)",
+      "type": "select",
+      "options": [
+        "4x6",
+        "5x8",
+        "6x10",
+        "8x12",
+        "10x14",
+        "12x16",
+        "14x18",
+        "16x20",
+        "20x25"
+      ],
+      "default": "8x12",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 10,
+      "min": 3,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "inner_radius": {
+      "formula": "B_ID[size] / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "B_OD[size] / 2",
+      "description": "Outer radius"
+    }
+  },
+  "constants": {
+    "B_ID": {
+      "4x6": 4,
+      "5x8": 5,
+      "6x10": 6,
+      "8x12": 8,
+      "10x14": 10,
+      "12x16": 12,
+      "14x18": 14,
+      "16x20": 16,
+      "20x25": 20
+    },
+    "B_OD": {
+      "4x6": 6,
+      "5x8": 8,
+      "6x10": 10,
+      "8x12": 12,
+      "10x14": 14,
+      "12x16": 16,
+      "14x18": 18,
+      "16x20": 20,
+      "20x25": 25
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "s1": {
+      "label": "8x12x10",
+      "values": {
+        "size": "8x12",
+        "length": 10
+      }
+    },
+    "s2": {
+      "label": "10x14x15",
+      "values": {
+        "size": "10x14",
+        "length": 15
+      }
+    }
+  }
+}

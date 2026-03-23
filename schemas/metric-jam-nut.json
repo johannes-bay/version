@@ -1,0 +1,142 @@
+{
+  "id": "metric-jam-nut",
+  "name": "Metric Jam Nut",
+  "version": "1.0.0",
+  "description": "DIN 439 thin jam nut",
+  "parameters": {
+    "size": {
+      "label": "Metric Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12",
+        "M16",
+        "M20"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Thread pitch"
+    },
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Nominal diameter"
+    },
+    "nut_af": {
+      "formula": "ISO_HEX_AF[size]",
+      "description": "Width across flats"
+    },
+    "nut_height": {
+      "formula": "NUT_HEIGHT[size]",
+      "description": "Nut height"
+    },
+    "outer_radius": {
+      "formula": "nut_af / sqrt(3)",
+      "description": "Circumscribed radius"
+    },
+    "bore_radius": {
+      "formula": "major_diameter / 2",
+      "description": "Bore radius"
+    }
+  },
+  "constants": {
+    "ISO_PITCH": {
+      "M2": 0.4,
+      "M2.5": 0.45,
+      "M3": 0.5,
+      "M4": 0.7,
+      "M5": 0.8,
+      "M6": 1.0,
+      "M8": 1.25,
+      "M10": 1.5,
+      "M12": 1.75,
+      "M16": 2.0,
+      "M20": 2.5
+    },
+    "ISO_MAJOR": {
+      "M2": 2.0,
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0,
+      "M8": 8.0,
+      "M10": 10.0,
+      "M12": 12.0,
+      "M16": 16.0,
+      "M20": 20.0
+    },
+    "ISO_HEX_AF": {
+      "M2": 4.0,
+      "M2.5": 5.0,
+      "M3": 5.5,
+      "M4": 7.0,
+      "M5": 8.0,
+      "M6": 10.0,
+      "M8": 13.0,
+      "M10": 16.0,
+      "M12": 18.0,
+      "M16": 24.0,
+      "M20": 30.0
+    },
+    "NUT_HEIGHT": {
+      "M2": 1.0,
+      "M2.5": 1.2,
+      "M3": 1.4,
+      "M4": 1.9,
+      "M5": 2.8,
+      "M6": 3.1,
+      "M8": 4.1,
+      "M10": 5.0,
+      "M12": 6.5,
+      "M16": 8.9,
+      "M20": 10.8
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "outer_radius",
+      "height": "nut_height",
+      "bore": "bore_radius"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m6": {
+      "label": "M6",
+      "values": {
+        "size": "M6"
+      }
+    },
+    "m8": {
+      "label": "M8",
+      "values": {
+        "size": "M8"
+      }
+    },
+    "m10": {
+      "label": "M10",
+      "values": {
+        "size": "M10"
+      }
+    }
+  }
+}

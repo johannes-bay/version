@@ -1,0 +1,57 @@
+{
+  "id": "square-tube-steel",
+  "name": "Steel Square Tube",
+  "version": "1.0.0",
+  "description": "Welded steel square tube",
+  "parameters": {
+    "side": {
+      "label": "Side Length",
+      "default": 20,
+      "min": 5,
+      "max": 80,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "wall": {
+      "label": "Wall Thickness",
+      "default": 2,
+      "min": 0.5,
+      "max": 8,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 50,
+      "min": 10,
+      "max": 300,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {},
+  "geometry": {
+    "body": {
+      "type": "box",
+      "width": "side",
+      "depth": "side",
+      "height": "length",
+      "shell": "wall"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "id": "pipe-cap",
+  "name": "Pipe Cap",
+  "version": "1.0.0",
+  "description": "Threaded pipe end cap",
+  "parameters": {
+    "nominal": {
+      "label": "Nominal Bore",
+      "type": "select",
+      "options": [
+        "6",
+        "8",
+        "10",
+        "15",
+        "20",
+        "25",
+        "32",
+        "40",
+        "50"
+      ],
+      "default": "20",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 30,
+      "min": 10,
+      "max": 150,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "pipe_od": {
+      "formula": "PIPE_OD[nominal]",
+      "description": "Outside diameter"
+    },
+    "pipe_wall": {
+      "formula": "PIPE_WALL[nominal]",
+      "description": "Wall thickness"
+    },
+    "outer_radius": {
+      "formula": "pipe_od / 2",
+      "description": "Outer radius"
+    },
+    "inner_radius": {
+      "formula": "pipe_od / 2 - pipe_wall",
+      "description": "Inner radius"
+    }
+  },
+  "constants": {
+    "PIPE_OD": {
+      "6": 10.2,
+      "8": 13.5,
+      "10": 17.2,
+      "15": 21.3,
+      "20": 26.9,
+      "25": 33.7,
+      "32": 42.4,
+      "40": 48.3,
+      "50": 60.3
+    },
+    "PIPE_WALL": {
+      "6": 1.8,
+      "8": 2.0,
+      "10": 2.0,
+      "15": 2.3,
+      "20": 2.3,
+      "25": 2.6,
+      "32": 2.6,
+      "40": 2.6,
+      "50": 2.9
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius * 1.1",
+      "height": "length * 0.6",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "dn20": {
+      "label": "DN20",
+      "values": {
+        "nominal": "20"
+      }
+    },
+    "dn25": {
+      "label": "DN25",
+      "values": {
+        "nominal": "25"
+      }
+    }
+  }
+}

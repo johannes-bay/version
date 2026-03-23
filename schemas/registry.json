@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "2.0.0",
   "schemas": [
     {
       "id": "laptop-stand",
@@ -8,42 +8,786 @@
       "schema": "./schemas/laptop-stand.json",
       "preview": "./geometry/laptop-stand-shader.js",
       "export": "./geometry/laptop-stand.js",
-      "tags": ["laptop", "ergonomic", "3d-print", "stand"],
-      "category": "accessories"
+      "tags": [],
+      "category": "general"
     },
     {
       "id": "iso-screw",
       "name": "ISO Metric Screw",
-      "description": "ISO 68-1 metric cap screw with helical threads",
+      "description": "ISO metric cap screw with helical threads",
       "schema": "./schemas/iso-screw.json",
       "preview": "./geometry/iso-screw-preview.js",
       "export": "./geometry/iso-screw.js",
-      "tags": ["iso", "metric", "fastener", "thread", "screw"],
-      "category": "fasteners"
+      "tags": [],
+      "category": "general"
     },
     {
       "id": "hex-nut",
       "name": "ISO Hex Nut",
       "description": "ISO 4032 hexagonal nut",
       "schema": "./schemas/hex-nut.json",
-      "tags": ["iso", "metric", "fastener", "nut", "hex"],
-      "category": "fasteners"
+      "tags": [],
+      "category": "general"
     },
     {
       "id": "enclosure",
       "name": "Parametric Enclosure",
       "description": "Open-top box enclosure with optional lid",
       "schema": "./schemas/enclosure.json",
-      "tags": ["box", "enclosure", "electronics", "3d-print"],
-      "category": "enclosures"
+      "tags": [],
+      "category": "general"
     },
     {
       "id": "shelf-bracket",
       "name": "Shelf Bracket",
       "description": "L-shaped shelf bracket with optional diagonal gusset",
       "schema": "./schemas/shelf-bracket.json",
-      "tags": ["bracket", "shelf", "structural", "mount"],
-      "category": "structural"
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-hex-bolt",
+      "name": "Metric Hex Bolt",
+      "description": "ISO 4014 hex head bolt",
+      "schema": "./schemas/metric-hex-bolt.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-button-head-screw",
+      "name": "Metric Button Head Screw",
+      "description": "ISO 7380 button head socket cap screw",
+      "schema": "./schemas/metric-button-head-screw.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-flat-head-screw",
+      "name": "Metric Flat Head Screw",
+      "description": "ISO 10642 flat head socket cap screw",
+      "schema": "./schemas/metric-flat-head-screw.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-set-screw-cup",
+      "name": "Metric Set Screw (Cup Point)",
+      "description": "ISO 4029 cup point set screw",
+      "schema": "./schemas/metric-set-screw-cup.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-set-screw-flat",
+      "name": "Metric Set Screw (Flat Point)",
+      "description": "ISO 4027 flat point set screw",
+      "schema": "./schemas/metric-set-screw-flat.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-shoulder-bolt",
+      "name": "Metric Shoulder Bolt",
+      "description": "ISO 7379 shoulder bolt",
+      "schema": "./schemas/metric-shoulder-bolt.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-stud",
+      "name": "Metric Stud Bolt",
+      "description": "Double-ended metric threaded stud",
+      "schema": "./schemas/metric-stud.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-threaded-rod",
+      "name": "Metric Threaded Rod",
+      "description": "Fully threaded metric rod",
+      "schema": "./schemas/metric-threaded-rod.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-thumb-screw",
+      "name": "Metric Thumb Screw",
+      "description": "Knurled head thumb screw",
+      "schema": "./schemas/metric-thumb-screw.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-carriage-bolt",
+      "name": "Metric Carriage Bolt",
+      "description": "Round head square neck carriage bolt",
+      "schema": "./schemas/metric-carriage-bolt.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-hex-bolt",
+      "name": "Inch Hex Bolt",
+      "description": "SAE hex bolt (UNC)",
+      "schema": "./schemas/inch-hex-bolt.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-socket-head-screw",
+      "name": "Inch Socket Head Cap Screw",
+      "description": "Inch SHCS (UNC)",
+      "schema": "./schemas/inch-socket-head-screw.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-nylon-lock-nut",
+      "name": "Metric Nylon Lock Nut",
+      "description": "DIN 985 nylon insert lock nut",
+      "schema": "./schemas/metric-nylon-lock-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-flange-nut",
+      "name": "Metric Flange Nut",
+      "description": "DIN 6923 serrated flange nut",
+      "schema": "./schemas/metric-flange-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-coupling-nut",
+      "name": "Metric Coupling Nut",
+      "description": "DIN 6334 long coupling nut",
+      "schema": "./schemas/metric-coupling-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-jam-nut",
+      "name": "Metric Jam Nut",
+      "description": "DIN 439 thin jam nut",
+      "schema": "./schemas/metric-jam-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-cap-nut",
+      "name": "Metric Cap Nut (Acorn)",
+      "description": "DIN 1587 domed cap nut",
+      "schema": "./schemas/metric-cap-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-hex-nut",
+      "name": "Inch Hex Nut",
+      "description": "SAE hex nut (UNC)",
+      "schema": "./schemas/inch-hex-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-nylon-lock-nut",
+      "name": "Inch Nylon Lock Nut",
+      "description": "SAE nylon insert lock nut",
+      "schema": "./schemas/inch-nylon-lock-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-jam-nut",
+      "name": "Inch Jam Nut",
+      "description": "SAE thin jam nut",
+      "schema": "./schemas/inch-jam-nut.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-flat-washer",
+      "name": "Metric Flat Washer",
+      "description": "ISO 7089 flat washer",
+      "schema": "./schemas/metric-flat-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-large-flat-washer",
+      "name": "Metric Large Flat Washer",
+      "description": "ISO 7093 large OD flat washer",
+      "schema": "./schemas/metric-large-flat-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-spring-lock-washer",
+      "name": "Metric Spring Lock Washer",
+      "description": "DIN 127 spring lock washer",
+      "schema": "./schemas/metric-spring-lock-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-flat-washer-sae",
+      "name": "Inch SAE Flat Washer",
+      "description": "SAE standard flat washer",
+      "schema": "./schemas/inch-flat-washer-sae.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-flat-washer-uss",
+      "name": "Inch USS Flat Washer",
+      "description": "USS large flat washer",
+      "schema": "./schemas/inch-flat-washer-uss.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-lock-washer",
+      "name": "Inch Split Lock Washer",
+      "description": "Split lock washer (inch)",
+      "schema": "./schemas/inch-lock-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "nylon-flat-washer",
+      "name": "Nylon Flat Washer",
+      "description": "Nylon insulating flat washer",
+      "schema": "./schemas/nylon-flat-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "rubber-flat-washer",
+      "name": "Rubber Flat Washer",
+      "description": "Rubber sealing washer",
+      "schema": "./schemas/rubber-flat-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-dowel-pin",
+      "name": "Metric Dowel Pin",
+      "description": "ISO 2338 hardened dowel pin",
+      "schema": "./schemas/metric-dowel-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-taper-pin",
+      "name": "Metric Taper Pin",
+      "description": "ISO 2339 taper pin",
+      "schema": "./schemas/metric-taper-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-roll-pin",
+      "name": "Metric Roll Pin",
+      "description": "ISO 8752 spring roll pin",
+      "schema": "./schemas/metric-roll-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "metric-clevis-pin",
+      "name": "Metric Clevis Pin",
+      "description": "Clevis pin with head",
+      "schema": "./schemas/metric-clevis-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-dowel-pin",
+      "name": "Inch Dowel Pin",
+      "description": "Hardened ground dowel pin (inch)",
+      "schema": "./schemas/inch-dowel-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-roll-pin",
+      "name": "Inch Roll Pin",
+      "description": "Spring roll pin (inch)",
+      "schema": "./schemas/inch-roll-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "inch-taper-pin",
+      "name": "Inch Taper Pin",
+      "description": "Standard taper pin (inch)",
+      "schema": "./schemas/inch-taper-pin.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-spacer-nylon",
+      "name": "Round Spacer (Nylon)",
+      "description": "Nylon unthreaded round spacer",
+      "schema": "./schemas/round-spacer-nylon.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-spacer-aluminum",
+      "name": "Round Spacer (Aluminum)",
+      "description": "Aluminum unthreaded round spacer",
+      "schema": "./schemas/round-spacer-aluminum.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-spacer-steel",
+      "name": "Round Spacer (Steel)",
+      "description": "Steel unthreaded round spacer",
+      "schema": "./schemas/round-spacer-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "hex-standoff-mf",
+      "name": "Hex Standoff (Male-Female)",
+      "description": "Male-Female hex standoff",
+      "schema": "./schemas/hex-standoff-mf.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "hex-standoff-ff",
+      "name": "Hex Standoff (Female-Female)",
+      "description": "Female-Female hex standoff",
+      "schema": "./schemas/hex-standoff-ff.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "hex-standoff-mm",
+      "name": "Hex Standoff (Male-Male)",
+      "description": "Male-Male hex standoff",
+      "schema": "./schemas/hex-standoff-mm.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "shoulder-spacer",
+      "name": "Shoulder Spacer",
+      "description": "Flanged shoulder spacer",
+      "schema": "./schemas/shoulder-spacer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "bronze-sleeve-bushing",
+      "name": "Bronze Sleeve Bushing",
+      "description": "Bronze Sleeve plain bearing bushing",
+      "schema": "./schemas/bronze-sleeve-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "flanged-bronze-bushing",
+      "name": "Flanged Bronze Bushing",
+      "description": "Flanged Bronze plain bearing bushing",
+      "schema": "./schemas/flanged-bronze-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "nylon-sleeve-bushing",
+      "name": "Nylon Sleeve Bushing",
+      "description": "Nylon Sleeve plain bearing bushing",
+      "schema": "./schemas/nylon-sleeve-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "flanged-nylon-bushing",
+      "name": "Flanged Nylon Bushing",
+      "description": "Flanged Nylon plain bearing bushing",
+      "schema": "./schemas/flanged-nylon-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "ptfe-sleeve-bushing",
+      "name": "Ptfe Sleeve Bushing",
+      "description": "Ptfe Sleeve plain bearing bushing",
+      "schema": "./schemas/ptfe-sleeve-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "steel-sleeve-bushing",
+      "name": "Steel Sleeve Bushing",
+      "description": "Steel Sleeve plain bearing bushing",
+      "schema": "./schemas/steel-sleeve-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "oilite-bushing",
+      "name": "Oilite Bushing",
+      "description": "Oilite plain bearing bushing",
+      "schema": "./schemas/oilite-bushing.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-bar-steel",
+      "name": "Steel Round Bar",
+      "description": "Cold-rolled steel round bar",
+      "schema": "./schemas/round-bar-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-bar-aluminum",
+      "name": "Aluminum Round Bar",
+      "description": "6061-T6 aluminum round bar",
+      "schema": "./schemas/round-bar-aluminum.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "hex-bar-steel",
+      "name": "Steel Hex Bar",
+      "description": "Cold-drawn steel hex bar",
+      "schema": "./schemas/hex-bar-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "square-bar-steel",
+      "name": "Steel Square Bar",
+      "description": "Cold-rolled steel square bar",
+      "schema": "./schemas/square-bar-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "flat-bar-steel",
+      "name": "Steel Flat Bar",
+      "description": "Hot-rolled steel flat bar",
+      "schema": "./schemas/flat-bar-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "flat-bar-aluminum",
+      "name": "Aluminum Flat Bar",
+      "description": "6061-T6 aluminum flat bar",
+      "schema": "./schemas/flat-bar-aluminum.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-tube-steel",
+      "name": "Steel Round Tube",
+      "description": "Welded steel round tube",
+      "schema": "./schemas/round-tube-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-tube-aluminum",
+      "name": "Aluminum Round Tube",
+      "description": "6063-T5 aluminum round tube",
+      "schema": "./schemas/round-tube-aluminum.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "square-tube-steel",
+      "name": "Steel Square Tube",
+      "description": "Welded steel square tube",
+      "schema": "./schemas/square-tube-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "rectangular-tube-steel",
+      "name": "Steel Rectangular Tube",
+      "description": "Welded steel rectangular tube",
+      "schema": "./schemas/rectangular-tube-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "l-bracket-steel",
+      "name": "Steel L-Bracket",
+      "description": "90\u00b0 angle bracket",
+      "schema": "./schemas/l-bracket-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "t-bracket-steel",
+      "name": "Steel T-Bracket",
+      "description": "T-shaped bracket",
+      "schema": "./schemas/t-bracket-steel.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "corner-bracket",
+      "name": "Corner Bracket",
+      "description": "Flat corner reinforcement bracket",
+      "schema": "./schemas/corner-bracket.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "z-bracket",
+      "name": "Z-Bracket",
+      "description": "Z-shaped offset bracket",
+      "schema": "./schemas/z-bracket.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "u-bracket",
+      "name": "U-Bracket",
+      "description": "U-shaped channel bracket",
+      "schema": "./schemas/u-bracket.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "mounting-plate",
+      "name": "Mounting Plate",
+      "description": "Flat mounting plate",
+      "schema": "./schemas/mounting-plate.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "gusset-plate",
+      "name": "Gusset Plate",
+      "description": "Triangular gusset reinforcement plate",
+      "schema": "./schemas/gusset-plate.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "base-plate",
+      "name": "Base Plate",
+      "description": "Heavy base plate",
+      "schema": "./schemas/base-plate.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "angle-iron",
+      "name": "Angle Iron",
+      "description": "Steel equal angle iron",
+      "schema": "./schemas/angle-iron.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "pipe-nipple",
+      "name": "Pipe Nipple",
+      "description": "Threaded pipe nipple",
+      "schema": "./schemas/pipe-nipple.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "pipe-coupling",
+      "name": "Pipe Coupling",
+      "description": "Threaded pipe coupling",
+      "schema": "./schemas/pipe-coupling.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "pipe-cap",
+      "name": "Pipe Cap",
+      "description": "Threaded pipe end cap",
+      "schema": "./schemas/pipe-cap.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "pipe-plug",
+      "name": "Pipe Plug",
+      "description": "Threaded pipe plug",
+      "schema": "./schemas/pipe-plug.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "tube-sleeve",
+      "name": "Tube Sleeve",
+      "description": "Compression tube sleeve",
+      "schema": "./schemas/tube-sleeve.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "tube-coupling",
+      "name": "Tube Coupling",
+      "description": "Tube-to-tube coupling",
+      "schema": "./schemas/tube-coupling.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "tube-reducer",
+      "name": "Tube Reducer",
+      "description": "Tube size reducer",
+      "schema": "./schemas/tube-reducer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "tube-spacer",
+      "name": "Tube Spacer",
+      "description": "Precision tube spacer",
+      "schema": "./schemas/tube-spacer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "round-knob",
+      "name": "Round Knob",
+      "description": "Smooth round control knob",
+      "schema": "./schemas/round-knob.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "ball-knob",
+      "name": "Ball Knob",
+      "description": "Spherical ball knob with bore",
+      "schema": "./schemas/ball-knob.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "t-handle",
+      "name": "T-Handle",
+      "description": "T-shaped handle with grip",
+      "schema": "./schemas/t-handle.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "pull-handle",
+      "name": "Pull Handle",
+      "description": "Bar pull handle",
+      "schema": "./schemas/pull-handle.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "lever-handle",
+      "name": "Lever Handle",
+      "description": "Straight lever handle",
+      "schema": "./schemas/lever-handle.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "shaft-collar-setscrew",
+      "name": "Set Screw Shaft Collar",
+      "description": "One-piece set screw shaft collar",
+      "schema": "./schemas/shaft-collar-setscrew.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "shaft-collar-clamp",
+      "name": "Clamp Shaft Collar",
+      "description": "Two-piece clamping shaft collar",
+      "schema": "./schemas/shaft-collar-clamp.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "shaft-sleeve",
+      "name": "Shaft Sleeve",
+      "description": "Precision shaft sleeve adapter",
+      "schema": "./schemas/shaft-sleeve.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "shaft-spacer",
+      "name": "Shaft Spacer",
+      "description": "Precision shaft spacer",
+      "schema": "./schemas/shaft-spacer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "thrust-washer",
+      "name": "Thrust Washer",
+      "description": "Bronze thrust washer",
+      "schema": "./schemas/thrust-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "flat-gasket",
+      "name": "Flat Gasket",
+      "description": "Flat ring gasket",
+      "schema": "./schemas/flat-gasket.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "rubber-grommet",
+      "name": "Rubber Grommet",
+      "description": "Rubber cable grommet",
+      "schema": "./schemas/rubber-grommet.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "nylon-standoff-round",
+      "name": "Nylon Round Standoff",
+      "description": "Nylon PCB round standoff",
+      "schema": "./schemas/nylon-standoff-round.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "pcb-hex-standoff",
+      "name": "PCB Hex Standoff",
+      "description": "Brass hex PCB standoff",
+      "schema": "./schemas/pcb-hex-standoff.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "cable-clamp-plate",
+      "name": "Cable Clamp Plate",
+      "description": "Two-piece cable clamp plate",
+      "schema": "./schemas/cable-clamp-plate.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "shim-washer",
+      "name": "Shim Washer",
+      "description": "Precision shim washer",
+      "schema": "./schemas/shim-washer.json",
+      "tags": [],
+      "category": "general"
+    },
+    {
+      "id": "adjustment-screw",
+      "name": "Adjustment Screw",
+      "description": "Knurled adjustment screw",
+      "schema": "./schemas/adjustment-screw.json",
+      "tags": [],
+      "category": "general"
     }
   ]
 }

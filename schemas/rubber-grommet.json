@@ -1,0 +1,66 @@
+{
+  "id": "rubber-grommet",
+  "name": "Rubber Grommet",
+  "version": "1.0.0",
+  "description": "Rubber cable grommet",
+  "parameters": {
+    "hole_dia": {
+      "label": "Panel Hole",
+      "default": 12,
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "id_dim": {
+      "label": "Cable ID",
+      "default": 6,
+      "min": 2,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "grommet_thickness": {
+      "label": "Thickness",
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "hole_dia / 2 + 2",
+      "description": "Outer radius"
+    },
+    "bore_radius": {
+      "formula": "id_dim / 2",
+      "description": "Cable bore"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "grommet_thickness",
+      "bore": "bore_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "12mm hole",
+      "values": {}
+    }
+  }
+}

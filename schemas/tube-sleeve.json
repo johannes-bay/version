@@ -1,0 +1,59 @@
+{
+  "id": "tube-sleeve",
+  "name": "Tube Sleeve",
+  "version": "1.0.0",
+  "description": "Compression tube sleeve",
+  "parameters": {
+    "od": {
+      "label": "Tube OD",
+      "default": 10,
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "sleeve_length": {
+      "label": "Length",
+      "default": 15,
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "od / 2 + 2",
+      "description": "Sleeve OD"
+    },
+    "inner_radius": {
+      "formula": "od / 2",
+      "description": "Tube bore"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "sleeve_length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "10mm",
+      "values": {
+        "od": 10
+      }
+    }
+  }
+}

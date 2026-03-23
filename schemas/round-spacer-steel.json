@@ -1,0 +1,70 @@
+{
+  "id": "round-spacer-steel",
+  "name": "Round Spacer (Steel)",
+  "version": "1.0.0",
+  "description": "Steel unthreaded round spacer",
+  "parameters": {
+    "od": {
+      "label": "OD",
+      "default": 8,
+      "min": 3,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "id_dim": {
+      "label": "ID",
+      "default": 4,
+      "min": 1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "spacer_length": {
+      "label": "Length",
+      "default": 10,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    },
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "spacer_length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "8x4x10",
+      "values": {
+        "od": 8,
+        "id_dim": 4,
+        "spacer_length": 10
+      }
+    }
+  }
+}

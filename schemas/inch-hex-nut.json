@@ -1,0 +1,130 @@
+{
+  "id": "inch-hex-nut",
+  "name": "Inch Hex Nut",
+  "version": "1.0.0",
+  "description": "SAE hex nut (UNC)",
+  "parameters": {
+    "size": {
+      "label": "Size",
+      "type": "select",
+      "options": [
+        "#4",
+        "#6",
+        "#8",
+        "#10",
+        "1/4",
+        "5/16",
+        "3/8",
+        "7/16",
+        "1/2",
+        "5/8",
+        "3/4"
+      ],
+      "default": "1/4",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "major_diameter": {
+      "formula": "INCH_MAJOR[size]",
+      "description": "Diameter"
+    },
+    "bore_radius": {
+      "formula": "major_diameter / 2",
+      "description": "Bore radius"
+    },
+    "nut_af": {
+      "formula": "INCH_HEX_AF[size]",
+      "description": "Width across flats"
+    },
+    "outer_radius": {
+      "formula": "nut_af / sqrt(3)",
+      "description": "Circumscribed radius"
+    },
+    "nut_height": {
+      "formula": "INCH_NUT_H[size]",
+      "description": "Nut height"
+    },
+    "pitch": {
+      "formula": "INCH_PITCH[size]",
+      "description": "Pitch"
+    }
+  },
+  "constants": {
+    "INCH_MAJOR": {
+      "#4": 2.845,
+      "#6": 3.505,
+      "#8": 4.166,
+      "#10": 4.826,
+      "1/4": 6.35,
+      "5/16": 7.938,
+      "3/8": 9.525,
+      "7/16": 11.112,
+      "1/2": 12.7,
+      "5/8": 15.875,
+      "3/4": 19.05
+    },
+    "INCH_PITCH": {
+      "#4": 0.635,
+      "#6": 0.794,
+      "#8": 0.794,
+      "#10": 1.058,
+      "1/4": 1.27,
+      "5/16": 1.411,
+      "3/8": 1.588,
+      "7/16": 1.814,
+      "1/2": 1.954,
+      "5/8": 2.309,
+      "3/4": 2.54
+    },
+    "INCH_HEX_AF": {
+      "#4": 6.35,
+      "#6": 7.938,
+      "#8": 8.731,
+      "#10": 9.525,
+      "1/4": 11.113,
+      "5/16": 12.7,
+      "3/8": 14.288,
+      "7/16": 15.875,
+      "1/2": 19.05,
+      "5/8": 23.813,
+      "3/4": 28.575
+    },
+    "INCH_NUT_H": {
+      "#4": 2.4,
+      "#6": 2.8,
+      "#8": 3.3,
+      "#10": 3.6,
+      "1/4": 5.6,
+      "5/16": 6.9,
+      "3/8": 8.3,
+      "7/16": 9.5,
+      "1/2": 11.1,
+      "5/8": 13.5,
+      "3/4": 16.7
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "outer_radius",
+      "height": "nut_height",
+      "bore": "bore_radius"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "q1": {
+      "label": "1/4",
+      "values": {
+        "size": "1/4"
+      }
+    }
+  }
+}

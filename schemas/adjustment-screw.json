@@ -1,0 +1,106 @@
+{
+  "id": "adjustment-screw",
+  "name": "Adjustment Screw",
+  "version": "1.0.0",
+  "description": "Knurled adjustment screw",
+  "parameters": {
+    "size": {
+      "label": "Thread",
+      "type": "select",
+      "options": [
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 15,
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Diameter"
+    },
+    "radius": {
+      "formula": "major_diameter / 2",
+      "description": "Radius"
+    },
+    "knob_radius": {
+      "formula": "major_diameter * 1.2",
+      "description": "Knob radius"
+    },
+    "knob_height": {
+      "formula": "major_diameter * 0.6",
+      "description": "Knob height"
+    },
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Pitch"
+    }
+  },
+  "constants": {
+    "ISO_MAJOR": {
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0,
+      "M8": 8.0
+    },
+    "ISO_PITCH": {
+      "M3": 0.5,
+      "M4": 0.7,
+      "M5": 0.8,
+      "M6": 1.0,
+      "M8": 1.25
+    }
+  },
+  "geometry": {
+    "thread": {
+      "type": "cylinder",
+      "radius": "radius",
+      "height": "length",
+      "position": [
+        0,
+        "-length / 2",
+        0
+      ]
+    },
+    "knob": {
+      "type": "cylinder",
+      "radius": "knob_radius",
+      "height": "knob_height",
+      "segments": 24,
+      "position": [
+        0,
+        "knob_height / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m6x15": {
+      "label": "M6x15",
+      "values": {
+        "size": "M6",
+        "length": 15
+      }
+    }
+  }
+}

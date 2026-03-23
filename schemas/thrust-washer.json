@@ -1,0 +1,66 @@
+{
+  "id": "thrust-washer",
+  "name": "Thrust Washer",
+  "version": "1.0.0",
+  "description": "Bronze thrust washer",
+  "parameters": {
+    "id_dim": {
+      "label": "ID",
+      "default": 10,
+      "min": 3,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "od": {
+      "label": "OD",
+      "default": 20,
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "washer_thickness": {
+      "label": "Thickness",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 5,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "washer_thickness",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "10x20x1.5",
+      "values": {}
+    }
+  }
+}

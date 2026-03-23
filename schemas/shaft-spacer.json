@@ -1,0 +1,66 @@
+{
+  "id": "shaft-spacer",
+  "name": "Shaft Spacer",
+  "version": "1.0.0",
+  "description": "Precision shaft spacer",
+  "parameters": {
+    "id_dim": {
+      "label": "ID",
+      "default": 8,
+      "min": 3,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "od": {
+      "label": "OD",
+      "default": 14,
+      "min": 5,
+      "max": 40,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "spacer_length": {
+      "label": "Length",
+      "default": 5,
+      "min": 1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "spacer_length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "8x14x5",
+      "values": {}
+    }
+  }
+}

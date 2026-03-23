@@ -1,0 +1,125 @@
+{
+  "id": "inch-flat-washer-sae",
+  "name": "Inch SAE Flat Washer",
+  "version": "1.0.0",
+  "description": "SAE standard flat washer",
+  "parameters": {
+    "size": {
+      "label": "Size",
+      "type": "select",
+      "options": [
+        "#4",
+        "#6",
+        "#8",
+        "#10",
+        "1/4",
+        "5/16",
+        "3/8",
+        "7/16",
+        "1/2",
+        "5/8",
+        "3/4"
+      ],
+      "default": "5/16",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "washer_id": {
+      "formula": "WASHER_ID[size]",
+      "description": "Inner diameter"
+    },
+    "washer_od": {
+      "formula": "WASHER_OD[size]",
+      "description": "Outer diameter"
+    },
+    "thickness": {
+      "formula": "WASHER_T[size]",
+      "description": "Thickness"
+    },
+    "inner_radius": {
+      "formula": "washer_id / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "washer_od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "constants": {
+    "WASHER_ID": {
+      "#4": 3.2,
+      "#6": 3.7,
+      "#8": 4.4,
+      "#10": 5.1,
+      "1/4": 7.1,
+      "5/16": 8.7,
+      "3/8": 10.3,
+      "7/16": 11.9,
+      "1/2": 13.5,
+      "5/8": 17.5,
+      "3/4": 20.6
+    },
+    "WASHER_OD": {
+      "#4": 7.9,
+      "#6": 9.5,
+      "#8": 11.1,
+      "#10": 12.7,
+      "1/4": 15.9,
+      "5/16": 17.5,
+      "3/8": 20.6,
+      "7/16": 22.2,
+      "1/2": 25.4,
+      "5/8": 34.9,
+      "3/4": 38.1
+    },
+    "WASHER_T": {
+      "#4": 0.8,
+      "#6": 0.8,
+      "#8": 1.2,
+      "#10": 1.2,
+      "1/4": 1.6,
+      "5/16": 1.6,
+      "3/8": 2.0,
+      "7/16": 2.0,
+      "1/2": 2.4,
+      "5/8": 2.4,
+      "3/4": 3.2
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "thickness",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "p2": {
+      "label": "#8",
+      "values": {
+        "size": "#8"
+      }
+    },
+    "p5": {
+      "label": "5/16",
+      "values": {
+        "size": "5/16"
+      }
+    },
+    "p8": {
+      "label": "1/2",
+      "values": {
+        "size": "1/2"
+      }
+    }
+  }
+}

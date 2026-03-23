@@ -1,0 +1,94 @@
+{
+  "id": "pull-handle",
+  "name": "Pull Handle",
+  "version": "1.0.0",
+  "description": "Bar pull handle",
+  "parameters": {
+    "handle_length": {
+      "label": "Length",
+      "default": 100,
+      "min": 40,
+      "max": 250,
+      "step": 10,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "handle_dia": {
+      "label": "Bar Diameter",
+      "default": 10,
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "standoff_h": {
+      "label": "Standoff",
+      "default": 25,
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "bar_radius": {
+      "formula": "handle_dia / 2",
+      "description": "Bar radius"
+    },
+    "post_radius": {
+      "formula": "handle_dia / 2 * 0.8",
+      "description": "Post radius"
+    }
+  },
+  "geometry": {
+    "bar": {
+      "type": "cylinder",
+      "radius": "bar_radius",
+      "height": "handle_length",
+      "rotation": [
+        0,
+        0,
+        "PI / 2"
+      ],
+      "position": [
+        0,
+        "standoff_h",
+        0
+      ]
+    },
+    "post_l": {
+      "type": "cylinder",
+      "radius": "post_radius",
+      "height": "standoff_h",
+      "position": [
+        "-handle_length / 2 + handle_dia",
+        "standoff_h / 2",
+        0
+      ]
+    },
+    "post_r": {
+      "type": "cylinder",
+      "radius": "post_radius",
+      "height": "standoff_h",
+      "position": [
+        "handle_length / 2 - handle_dia",
+        "standoff_h / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

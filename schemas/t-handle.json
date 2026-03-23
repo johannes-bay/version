@@ -1,0 +1,88 @@
+{
+  "id": "t-handle",
+  "name": "T-Handle",
+  "version": "1.0.0",
+  "description": "T-shaped handle with grip",
+  "parameters": {
+    "grip_length": {
+      "label": "Grip Length",
+      "default": 60,
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "grip_dia": {
+      "label": "Grip Diameter",
+      "default": 12,
+      "min": 6,
+      "max": 25,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "shaft_length": {
+      "label": "Shaft Length",
+      "default": 40,
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "shaft_dia": {
+      "label": "Shaft Diameter",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "grip_radius": {
+      "formula": "grip_dia / 2",
+      "description": "Grip radius"
+    },
+    "shaft_radius": {
+      "formula": "shaft_dia / 2",
+      "description": "Shaft radius"
+    }
+  },
+  "geometry": {
+    "grip": {
+      "type": "cylinder",
+      "radius": "grip_radius",
+      "height": "grip_length",
+      "rotation": [
+        0,
+        0,
+        "PI / 2"
+      ]
+    },
+    "shaft": {
+      "type": "cylinder",
+      "radius": "shaft_radius",
+      "height": "shaft_length",
+      "position": [
+        0,
+        "-shaft_length / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

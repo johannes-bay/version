@@ -1,0 +1,69 @@
+{
+  "id": "shaft-collar-clamp",
+  "name": "Clamp Shaft Collar",
+  "version": "1.0.0",
+  "description": "Two-piece clamping shaft collar",
+  "parameters": {
+    "bore_dia": {
+      "label": "Bore",
+      "default": 10,
+      "min": 3,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "collar_od": {
+      "label": "OD",
+      "default": 22,
+      "min": 8,
+      "max": 65,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "collar_width": {
+      "label": "Width",
+      "default": 11,
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "bore_radius": {
+      "formula": "bore_dia / 2",
+      "description": "Bore radius"
+    },
+    "outer_radius": {
+      "formula": "collar_od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "collar_width",
+      "bore": "bore_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "d10": {
+      "label": "10mm bore",
+      "values": {
+        "bore_dia": 10,
+        "collar_od": 22
+      }
+    }
+  }
+}

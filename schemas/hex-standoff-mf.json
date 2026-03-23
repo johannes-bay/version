@@ -1,0 +1,93 @@
+{
+  "id": "hex-standoff-mf",
+  "name": "Hex Standoff (Male-Female)",
+  "version": "1.0.0",
+  "description": "Male-Female hex standoff",
+  "parameters": {
+    "af": {
+      "label": "Across Flats",
+      "default": 8,
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "thread": {
+      "label": "Thread Size",
+      "type": "select",
+      "options": [
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6"
+      ],
+      "default": "M3",
+      "group": "dimensions"
+    },
+    "standoff_length": {
+      "label": "Body Length",
+      "default": 10,
+      "min": 3,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "radius": {
+      "formula": "af / sqrt(3)",
+      "description": "Circumscribed radius"
+    },
+    "bore_radius": {
+      "formula": "ISO_MAJOR[thread] / 2",
+      "description": "Bore radius"
+    },
+    "pitch": {
+      "formula": "ISO_PITCH[thread]",
+      "description": "Thread pitch"
+    }
+  },
+  "constants": {
+    "ISO_MAJOR": {
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0
+    },
+    "ISO_PITCH": {
+      "M2.5": 0.45,
+      "M3": 0.5,
+      "M4": 0.7,
+      "M5": 0.8,
+      "M6": 1.0
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "radius",
+      "height": "standoff_length",
+      "bore": "bore_radius"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "M3x10",
+      "values": {
+        "thread": "M3",
+        "standoff_length": 10
+      }
+    }
+  }
+}

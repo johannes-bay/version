@@ -1,0 +1,92 @@
+{
+  "id": "u-bracket",
+  "name": "U-Bracket",
+  "version": "1.0.0",
+  "description": "U-shaped channel bracket",
+  "parameters": {
+    "bracket_width": {
+      "label": "Width",
+      "default": 30,
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "bracket_height": {
+      "label": "Height",
+      "default": 50,
+      "min": 15,
+      "max": 150,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "bracket_depth": {
+      "label": "Depth",
+      "default": 50,
+      "min": 15,
+      "max": 150,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "thickness": {
+      "label": "Thickness",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {},
+  "geometry": {
+    "left": {
+      "type": "box",
+      "width": "thickness",
+      "depth": "bracket_depth",
+      "height": "bracket_height",
+      "position": [
+        "-bracket_width / 2 + thickness / 2",
+        "bracket_height / 2",
+        0
+      ]
+    },
+    "right": {
+      "type": "box",
+      "width": "thickness",
+      "depth": "bracket_depth",
+      "height": "bracket_height",
+      "position": [
+        "bracket_width / 2 - thickness / 2",
+        "bracket_height / 2",
+        0
+      ]
+    },
+    "bottom": {
+      "type": "box",
+      "width": "bracket_width",
+      "depth": "bracket_depth",
+      "height": "thickness",
+      "position": [
+        0,
+        "thickness / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

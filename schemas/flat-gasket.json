@@ -1,0 +1,66 @@
+{
+  "id": "flat-gasket",
+  "name": "Flat Gasket",
+  "version": "1.0.0",
+  "description": "Flat ring gasket",
+  "parameters": {
+    "id_dim": {
+      "label": "ID",
+      "default": 15,
+      "min": 5,
+      "max": 80,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "od": {
+      "label": "OD",
+      "default": 25,
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "gasket_thickness": {
+      "label": "Thickness",
+      "default": 2,
+      "min": 0.5,
+      "max": 6,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "inner_radius": {
+      "formula": "id_dim / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "gasket_thickness",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "15x25x2",
+      "values": {}
+    }
+  }
+}

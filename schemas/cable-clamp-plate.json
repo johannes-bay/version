@@ -1,0 +1,56 @@
+{
+  "id": "cable-clamp-plate",
+  "name": "Cable Clamp Plate",
+  "version": "1.0.0",
+  "description": "Two-piece cable clamp plate",
+  "parameters": {
+    "plate_width": {
+      "label": "Width",
+      "default": 20,
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "plate_length": {
+      "label": "Length",
+      "default": 30,
+      "min": 15,
+      "max": 80,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "plate_thickness": {
+      "label": "Thickness",
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {},
+  "geometry": {
+    "plate": {
+      "type": "box",
+      "width": "plate_width",
+      "depth": "plate_length",
+      "height": "plate_thickness"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

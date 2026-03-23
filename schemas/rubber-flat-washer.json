@@ -1,0 +1,117 @@
+{
+  "id": "rubber-flat-washer",
+  "name": "Rubber Flat Washer",
+  "version": "1.0.0",
+  "description": "Rubber sealing washer",
+  "parameters": {
+    "size": {
+      "label": "Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "washer_id": {
+      "formula": "WASHER_ID[size]",
+      "description": "Inner diameter"
+    },
+    "washer_od": {
+      "formula": "WASHER_OD[size]",
+      "description": "Outer diameter"
+    },
+    "thickness": {
+      "formula": "WASHER_T[size]",
+      "description": "Thickness"
+    },
+    "inner_radius": {
+      "formula": "washer_id / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "washer_od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "constants": {
+    "WASHER_ID": {
+      "M2": 2.2,
+      "M2.5": 2.7,
+      "M3": 3.2,
+      "M4": 4.3,
+      "M5": 5.3,
+      "M6": 6.4,
+      "M8": 8.4,
+      "M10": 10.5,
+      "M12": 13.0
+    },
+    "WASHER_OD": {
+      "M2": 6.0,
+      "M2.5": 7.2,
+      "M3": 8.4,
+      "M4": 10.8,
+      "M5": 12.0,
+      "M6": 14.4,
+      "M8": 19.2,
+      "M10": 24.0,
+      "M12": 28.8
+    },
+    "WASHER_T": {
+      "M2": 0.8,
+      "M2.5": 1.2,
+      "M3": 1.2,
+      "M4": 2.0,
+      "M5": 2.5,
+      "M6": 4.0,
+      "M8": 4.0,
+      "M10": 5.0,
+      "M12": 6.2
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "thickness",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "p2": {
+      "label": "M3",
+      "values": {
+        "size": "M3"
+      }
+    },
+    "p5": {
+      "label": "M6",
+      "values": {
+        "size": "M6"
+      }
+    },
+    "p8": {
+      "label": "M12",
+      "values": {
+        "size": "M12"
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "id": "metric-shoulder-bolt",
+  "name": "Metric Shoulder Bolt",
+  "version": "1.0.0",
+  "description": "ISO 7379 shoulder bolt",
+  "parameters": {
+    "size": {
+      "label": "Metric Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    },
+    "shoulder_length": {
+      "label": "Shoulder Length",
+      "default": 20,
+      "min": 5,
+      "max": 80,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "shoulder_dia": {
+      "label": "Shoulder Diameter",
+      "default": 10,
+      "min": 4,
+      "max": 30,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Thread diameter"
+    },
+    "thread_radius": {
+      "formula": "major_diameter / 2",
+      "description": "Thread radius"
+    },
+    "shoulder_radius": {
+      "formula": "shoulder_dia / 2",
+      "description": "Shoulder radius"
+    },
+    "head_diameter": {
+      "formula": "ISO_SHCS_HEAD_D[size]",
+      "description": "Head diameter"
+    },
+    "head_radius": {
+      "formula": "head_diameter / 2",
+      "description": "Head radius"
+    },
+    "head_height": {
+      "formula": "ISO_SHCS_HEAD_H[size]",
+      "description": "Head height"
+    },
+    "thread_length": {
+      "formula": "major_diameter * 1.5",
+      "description": "Thread length"
+    },
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Pitch"
+    }
+  },
+  "constants": {
+    "ISO_MAJOR": {
+      "M2": 2.0,
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0,
+      "M8": 8.0,
+      "M10": 10.0,
+      "M12": 12.0,
+      "M16": 16.0,
+      "M20": 20.0
+    },
+    "ISO_PITCH": {
+      "M2": 0.4,
+      "M2.5": 0.45,
+      "M3": 0.5,
+      "M4": 0.7,
+      "M5": 0.8,
+      "M6": 1.0,
+      "M8": 1.25,
+      "M10": 1.5,
+      "M12": 1.75,
+      "M16": 2.0,
+      "M20": 2.5
+    },
+    "ISO_SHCS_HEAD_D": {
+      "M2": 3.8,
+      "M2.5": 4.5,
+      "M3": 5.5,
+      "M4": 7.0,
+      "M5": 8.5,
+      "M6": 10.0,
+      "M8": 13.0,
+      "M10": 16.0,
+      "M12": 18.0,
+      "M16": 24.0,
+      "M20": 30.0
+    },
+    "ISO_SHCS_HEAD_H": {
+      "M2": 2.0,
+      "M2.5": 2.5,
+      "M3": 3.0,
+      "M4": 4.0,
+      "M5": 5.0,
+      "M6": 6.0,
+      "M8": 8.0,
+      "M10": 10.0,
+      "M12": 12.0,
+      "M16": 16.0,
+      "M20": 20.0
+    }
+  },
+  "geometry": {
+    "head": {
+      "type": "cylinder",
+      "radius": "head_radius",
+      "height": "head_height",
+      "position": [
+        0,
+        "head_height / 2",
+        0
+      ]
+    },
+    "shoulder": {
+      "type": "cylinder",
+      "radius": "shoulder_radius",
+      "height": "shoulder_length",
+      "position": [
+        0,
+        "-shoulder_length / 2",
+        0
+      ]
+    },
+    "thread": {
+      "type": "cylinder",
+      "radius": "thread_radius",
+      "height": "thread_length",
+      "position": [
+        0,
+        "-shoulder_length - thread_length / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m6": {
+      "label": "M6x20",
+      "values": {
+        "size": "M6",
+        "shoulder_length": 20,
+        "shoulder_dia": 10
+      }
+    }
+  }
+}

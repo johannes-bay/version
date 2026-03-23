@@ -1,0 +1,89 @@
+{
+  "id": "lever-handle",
+  "name": "Lever Handle",
+  "version": "1.0.0",
+  "description": "Straight lever handle",
+  "parameters": {
+    "handle_length": {
+      "label": "Length",
+      "default": 80,
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "handle_dia": {
+      "label": "Diameter",
+      "default": 10,
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "bore_dia": {
+      "label": "Bore",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "handle_radius": {
+      "formula": "handle_dia / 2",
+      "description": "Handle radius"
+    },
+    "bore_radius": {
+      "formula": "bore_dia / 2",
+      "description": "Bore radius"
+    },
+    "hub_radius": {
+      "formula": "handle_dia * 0.8",
+      "description": "Hub radius"
+    },
+    "hub_height": {
+      "formula": "handle_dia",
+      "description": "Hub height"
+    }
+  },
+  "geometry": {
+    "handle": {
+      "type": "cylinder",
+      "radius": "handle_radius",
+      "height": "handle_length",
+      "rotation": [
+        0,
+        0,
+        "PI / 2"
+      ],
+      "position": [
+        "handle_length / 2",
+        0,
+        0
+      ]
+    },
+    "hub": {
+      "type": "cylinder",
+      "radius": "hub_radius",
+      "height": "hub_height",
+      "bore": "bore_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

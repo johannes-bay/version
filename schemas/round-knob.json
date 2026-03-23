@@ -1,0 +1,66 @@
+{
+  "id": "round-knob",
+  "name": "Round Knob",
+  "version": "1.0.0",
+  "description": "Smooth round control knob",
+  "parameters": {
+    "knob_dia": {
+      "label": "Diameter",
+      "default": 25,
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "knob_height": {
+      "label": "Height",
+      "default": 15,
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "bore_dia": {
+      "label": "Bore",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "knob_radius": {
+      "formula": "knob_dia / 2",
+      "description": "Knob radius"
+    },
+    "bore_radius": {
+      "formula": "bore_dia / 2",
+      "description": "Bore radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "knob_radius",
+      "height": "knob_height",
+      "bore": "bore_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "25mm",
+      "values": {}
+    }
+  }
+}

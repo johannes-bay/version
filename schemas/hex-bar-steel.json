@@ -1,0 +1,52 @@
+{
+  "id": "hex-bar-steel",
+  "name": "Steel Hex Bar",
+  "version": "1.0.0",
+  "description": "Cold-drawn steel hex bar",
+  "parameters": {
+    "af": {
+      "label": "Across Flats",
+      "default": 10,
+      "min": 3,
+      "max": 50,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 50,
+      "min": 10,
+      "max": 300,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "radius": {
+      "formula": "af / sqrt(3)",
+      "description": "Circumscribed radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "radius",
+      "height": "length"
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "Default",
+      "values": {}
+    }
+  }
+}

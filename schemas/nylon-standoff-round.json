@@ -1,0 +1,66 @@
+{
+  "id": "nylon-standoff-round",
+  "name": "Nylon Round Standoff",
+  "version": "1.0.0",
+  "description": "Nylon PCB round standoff",
+  "parameters": {
+    "od": {
+      "label": "OD",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "id_dim": {
+      "label": "Hole ID",
+      "default": 3.2,
+      "min": 1.5,
+      "max": 8,
+      "step": 0.1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "standoff_length": {
+      "label": "Length",
+      "default": 8,
+      "min": 2,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "od / 2",
+      "description": "Outer radius"
+    },
+    "bore_radius": {
+      "formula": "id_dim / 2",
+      "description": "Bore radius"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "standoff_length",
+      "bore": "bore_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "M3x8",
+      "values": {}
+    }
+  }
+}

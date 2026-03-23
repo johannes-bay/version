@@ -1,0 +1,168 @@
+{
+  "id": "inch-hex-bolt",
+  "name": "Inch Hex Bolt",
+  "version": "1.0.0",
+  "description": "SAE hex bolt (UNC)",
+  "parameters": {
+    "size": {
+      "label": "Metric Size",
+      "type": "select",
+      "options": [
+        "#4",
+        "#6",
+        "#8",
+        "#10",
+        "1/4",
+        "5/16",
+        "3/8",
+        "7/16",
+        "1/2",
+        "5/8",
+        "3/4"
+      ],
+      "default": "1/4",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 20,
+      "min": 5,
+      "max": 150,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "pitch": {
+      "formula": "ISO_PITCH[size]",
+      "description": "Thread pitch"
+    },
+    "major_diameter": {
+      "formula": "ISO_MAJOR[size]",
+      "description": "Nominal diameter"
+    },
+    "shank_radius": {
+      "formula": "major_diameter / 2",
+      "description": "Shank radius"
+    },
+    "head_diameter": {
+      "formula": "HEAD_DIA[size]",
+      "description": "Head diameter"
+    },
+    "head_radius": {
+      "formula": "head_diameter / 2",
+      "description": "Head radius"
+    },
+    "head_height": {
+      "formula": "HEAD_HEIGHT[size]",
+      "description": "Head height"
+    }
+  },
+  "constants": {
+    "ISO_PITCH": {
+      "#4": 0.635,
+      "#6": 0.794,
+      "#8": 0.794,
+      "#10": 1.058,
+      "1/4": 1.27,
+      "5/16": 1.411,
+      "3/8": 1.588,
+      "7/16": 1.814,
+      "1/2": 1.954,
+      "5/8": 2.309,
+      "3/4": 2.54
+    },
+    "ISO_MAJOR": {
+      "#4": 2.845,
+      "#6": 3.505,
+      "#8": 4.166,
+      "#10": 4.826,
+      "1/4": 6.35,
+      "5/16": 7.938,
+      "3/8": 9.525,
+      "7/16": 11.112,
+      "1/2": 12.7,
+      "5/8": 15.875,
+      "3/4": 19.05
+    },
+    "HEAD_DIA": {
+      "#4": 6.35,
+      "#6": 7.938,
+      "#8": 8.731,
+      "#10": 9.525,
+      "1/4": 11.113,
+      "5/16": 12.7,
+      "3/8": 14.288,
+      "7/16": 15.875,
+      "1/2": 19.05,
+      "5/8": 23.813,
+      "3/4": 28.575
+    },
+    "HEAD_HEIGHT": {
+      "#4": 2.0,
+      "#6": 2.4,
+      "#8": 2.8,
+      "#10": 3.2,
+      "1/4": 4.0,
+      "5/16": 5.1,
+      "3/8": 6.0,
+      "7/16": 7.0,
+      "1/2": 8.0,
+      "5/8": 10.0,
+      "3/4": 12.0
+    }
+  },
+  "geometry": {
+    "shank": {
+      "type": "cylinder",
+      "radius": "shank_radius",
+      "height": "length",
+      "position": [
+        0,
+        "-length / 2",
+        0
+      ]
+    },
+    "head": {
+      "type": "polygon",
+      "sides": 6,
+      "radius": "head_diameter / sqrt(3)",
+      "height": "head_height",
+      "position": [
+        0,
+        "head_height / 2",
+        0
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "m6x20": {
+      "label": "M6x20",
+      "values": {
+        "size": "M6",
+        "length": 20
+      }
+    },
+    "m8x30": {
+      "label": "M8x30",
+      "values": {
+        "size": "M8",
+        "length": 30
+      }
+    },
+    "m10x40": {
+      "label": "M10x40",
+      "values": {
+        "size": "M10",
+        "length": 40
+      }
+    }
+  }
+}

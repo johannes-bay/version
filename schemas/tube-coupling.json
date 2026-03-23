@@ -1,0 +1,59 @@
+{
+  "id": "tube-coupling",
+  "name": "Tube Coupling",
+  "version": "1.0.0",
+  "description": "Tube-to-tube coupling",
+  "parameters": {
+    "od": {
+      "label": "Tube OD",
+      "default": 10,
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "coupling_length": {
+      "label": "Length",
+      "default": 25,
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "outer_radius": {
+      "formula": "od / 2 + 3",
+      "description": "Coupling OD"
+    },
+    "inner_radius": {
+      "formula": "od / 2",
+      "description": "Bore"
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "coupling_length",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "10mm",
+      "values": {
+        "od": 10
+      }
+    }
+  }
+}

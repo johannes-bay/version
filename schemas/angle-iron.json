@@ -1,0 +1,67 @@
+{
+  "id": "angle-iron",
+  "name": "Angle Iron",
+  "version": "1.0.0",
+  "description": "Steel equal angle iron",
+  "parameters": {
+    "leg": {
+      "label": "Leg Size",
+      "default": 25,
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "thickness": {
+      "label": "Thickness",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "unit": "mm",
+      "group": "dimensions"
+    },
+    "length": {
+      "label": "Length",
+      "default": 100,
+      "min": 20,
+      "max": 500,
+      "step": 10,
+      "unit": "mm",
+      "group": "dimensions"
+    }
+  },
+  "derived": {},
+  "geometry": {
+    "leg_a": {
+      "type": "box",
+      "width": "thickness",
+      "depth": "leg",
+      "height": "length"
+    },
+    "leg_b": {
+      "type": "box",
+      "width": "leg",
+      "depth": "thickness",
+      "height": "length",
+      "position": [
+        "leg / 2 - thickness / 2",
+        0,
+        "-leg / 2 + thickness / 2"
+      ]
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "default": {
+      "label": "25x3x100",
+      "values": {}
+    }
+  }
+}

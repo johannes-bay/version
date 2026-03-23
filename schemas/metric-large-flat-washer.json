@@ -1,0 +1,125 @@
+{
+  "id": "metric-large-flat-washer",
+  "name": "Metric Large Flat Washer",
+  "version": "1.0.0",
+  "description": "ISO 7093 large OD flat washer",
+  "parameters": {
+    "size": {
+      "label": "Size",
+      "type": "select",
+      "options": [
+        "M2",
+        "M2.5",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M8",
+        "M10",
+        "M12",
+        "M16",
+        "M20"
+      ],
+      "default": "M6",
+      "group": "dimensions"
+    }
+  },
+  "derived": {
+    "washer_id": {
+      "formula": "WASHER_ID[size]",
+      "description": "Inner diameter"
+    },
+    "washer_od": {
+      "formula": "WASHER_OD[size]",
+      "description": "Outer diameter"
+    },
+    "thickness": {
+      "formula": "WASHER_T[size]",
+      "description": "Thickness"
+    },
+    "inner_radius": {
+      "formula": "washer_id / 2",
+      "description": "Inner radius"
+    },
+    "outer_radius": {
+      "formula": "washer_od / 2",
+      "description": "Outer radius"
+    }
+  },
+  "constants": {
+    "WASHER_ID": {
+      "M2": 2.2,
+      "M2.5": 2.7,
+      "M3": 3.2,
+      "M4": 4.3,
+      "M5": 5.3,
+      "M6": 6.4,
+      "M8": 8.4,
+      "M10": 10.5,
+      "M12": 13.0,
+      "M16": 17.0,
+      "M20": 21.0
+    },
+    "WASHER_OD": {
+      "M2": 7.0,
+      "M2.5": 8.0,
+      "M3": 9.0,
+      "M4": 12.0,
+      "M5": 15.0,
+      "M6": 18.0,
+      "M8": 24.0,
+      "M10": 30.0,
+      "M12": 37.0,
+      "M16": 50.0,
+      "M20": 60.0
+    },
+    "WASHER_T": {
+      "M2": 0.36,
+      "M2.5": 0.6,
+      "M3": 0.6,
+      "M4": 0.96,
+      "M5": 1.2,
+      "M6": 1.92,
+      "M8": 1.92,
+      "M10": 2.4,
+      "M12": 3.0,
+      "M16": 3.5999999999999996,
+      "M20": 3.5999999999999996
+    }
+  },
+  "geometry": {
+    "body": {
+      "type": "cylinder",
+      "radius": "outer_radius",
+      "height": "thickness",
+      "bore": "inner_radius",
+      "segments": 32
+    }
+  },
+  "groups": {
+    "dimensions": {
+      "label": "Dimensions",
+      "order": 1
+    }
+  },
+  "presets": {
+    "p2": {
+      "label": "M3",
+      "values": {
+        "size": "M3"
+      }
+    },
+    "p5": {
+      "label": "M6",
+      "values": {
+        "size": "M6"
+      }
+    },
+    "p8": {
+      "label": "M12",
+      "values": {
+        "size": "M12"
+      }
+    }
+  }
+}
