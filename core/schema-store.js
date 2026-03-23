@@ -58,21 +58,24 @@ export class SchemaStore {
   }
 
   /**
-   * Load a schema by ID. Fetches from network, caches in IDB.
+   * Load a schema by ID. Network-first with IDB fallback (offline).
    */
   async loadSchema(id) {
-    // Try IDB cache first
-    const cached = await this._get('schemas', id);
-    if (cached) return cached;
-
-    // Find in registry
     const entry = this.getSchemas().find(s => s.id === id);
     if (!entry) throw new Error(`Schema not found: ${id}`);
 
-    const resp = await fetch(entry.schema);
-    const schema = await resp.json();
-    await this._put('schemas', id, schema);
-    return schema;
+    // Network-first: always fetch fresh when online
+    try {
+      const resp = await fetch(entry.schema);
+      const schema = await resp.json();
+      await this._put('schemas', id, schema);
+      return schema;
+    } catch {
+      // Offline fallback: try IDB cache
+      const cached = await this._get('schemas', id);
+      if (cached) return cached;
+      throw new Error(`Schema "${id}" unavailable offline (not cached)`);
+    }
   }
 
   /**
