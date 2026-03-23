@@ -68,6 +68,10 @@ export class Configurator {
 
     // Initial geometry build
     this.rebuildPreview();
+
+    // Background: register ALL schemas in the XENOS graph so the
+    // graph view shows the full cross-schema connection picture.
+    this._registerAllSchemas();
   }
 
   setupDesignSelector() {
@@ -382,6 +386,23 @@ export class Configurator {
     this._saveParamsTimer = setTimeout(() => {
       this.store.saveParams(this.currentDesignType, { ...this.currentParams });
     }, 500);
+  }
+
+  /**
+   * Register all schemas in the XENOS graph (background).
+   * Fetches every schema in parallel and registers entities/relations
+   * so the graph view shows the full cross-schema picture.
+   */
+  async _registerAllSchemas() {
+    const all = this.store.getSchemas();
+    const pending = all.filter(s => s.id !== this.currentDesignType);
+    await Promise.all(pending.map(async (entry) => {
+      try {
+        const schema = await this.store.loadSchema(entry.id);
+        this.formulaEngine.registerSchema(schema, this.xenos);
+      } catch { /* skip failures */ }
+    }));
+    console.log(`XENOS: registered ${all.length} schemas in graph`);
   }
 
   setupViewButtons() {
