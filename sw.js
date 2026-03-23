@@ -3,7 +3,7 @@
  * Cache-first strategy for full offline support.
  */
 
-const CACHE_NAME = 'v4-cache-v3';
+const CACHE_NAME = 'v4-cache-v4';
 
 // Core files precached on install. Schemas cached on first access.
 const PRECACHE_URLS = [
@@ -15,6 +15,7 @@ const PRECACHE_URLS = [
   './core/xenos-bridge.js',
   './core/schema-store.js',
   './core/geometry-builder.js',
+  './ui/graph-view.js',
   './schemas/registry.json',
   './geometry/laptop-stand-shader.js',
   './geometry/laptop-stand-preview.js',

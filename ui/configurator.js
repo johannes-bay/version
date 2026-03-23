@@ -9,6 +9,7 @@ import { ThreeViewer } from './three-viewer.js';
 import { XenosBridge } from '../core/xenos-bridge.js';
 import { SchemaStore } from '../core/schema-store.js';
 import { GeometryBuilder } from '../core/geometry-builder.js';
+import { GraphView } from './graph-view.js';
 
 export class Configurator {
   constructor() {
@@ -36,6 +37,7 @@ export class Configurator {
     this.xenos = null;
     this.store = null;
     this.geometryBuilder = new GeometryBuilder();
+    this.graphView = null;
     this.entityMap = {};
     this.currentEncounter = null;
     this._previewModule = null;  // cached custom preview module
@@ -389,6 +391,20 @@ export class Configurator {
     const fitBtn = document.getElementById('fit-btn');
     if (fitBtn) {
       fitBtn.addEventListener('click', () => this.viewer.fitToModel(true));
+    }
+
+    // Graph view toggle
+    const graphBtn = document.getElementById('toggle-graph');
+    if (graphBtn) {
+      const container = document.getElementById('canvas-container');
+      this.graphView = new GraphView(container);
+      graphBtn.addEventListener('click', () => {
+        if (this.graphView._visible) {
+          this.graphView.hide();
+        } else {
+          this.graphView.show(this.xenos, this.store.getSchemas());
+        }
+      });
     }
   }
 
