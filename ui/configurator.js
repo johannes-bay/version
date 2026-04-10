@@ -175,7 +175,11 @@ export class Configurator {
   startAnimationLoop() {
     const animate = () => {
       this.animationFrame = requestAnimationFrame(animate);
-      this.updateDisplayParams();
+      try {
+        this.updateDisplayParams();
+      } catch (e) {
+        console.error('Animation loop error:', e);
+      }
     };
     animate();
   }
@@ -239,36 +243,33 @@ export class Configurator {
       computed = this.formulaEngine.evaluate(this.schema, this.displayParams);
     }
 
-    if (this._previewModule) {
-      // Legacy custom preview module
-      if (this._previewModule.createLaptopStandShader) {
-        // Shader strategy: build once, then update uniforms
-        if (!this.shaderMesh) {
-          const { mesh, updateParams } = this._previewModule.createLaptopStandShader();
-          this.shaderMesh = mesh;
-          this.shaderUpdate = updateParams;
-          this.viewer.setMesh(mesh, true);
+    try {
+      if (this._previewModule) {
+        // Legacy custom preview module
+        if (this._previewModule.createLaptopStandShader) {
+          if (!this.shaderMesh) {
+            const { mesh, updateParams } = this._previewModule.createLaptopStandShader();
+            this.shaderMesh = mesh;
+            this.shaderUpdate = updateParams;
+            this.viewer.setMesh(mesh, true);
+          }
+          this.shaderUpdate(computed);
+        } else if (this._previewModule.createISOScrewPreview) {
+          const hash = JSON.stringify(computed);
+          if (hash === this.lastComputedHash) return;
+          this.lastComputedHash = hash;
+          const geoData = this._previewModule.createISOScrewPreview(computed);
+          if (geoData) this.viewer.updateModel(geoData, false);
         }
-        this.shaderUpdate(computed);
-      } else if (this._previewModule.createISOScrewPreview) {
-        // Primitive strategy: rebuild on change
+      } else if (this.schema.geometry) {
         const hash = JSON.stringify(computed);
         if (hash === this.lastComputedHash) return;
         this.lastComputedHash = hash;
-        const geoData = this._previewModule.createISOScrewPreview(computed);
-        if (geoData) this.viewer.updateModel(geoData, false);
-      }
-    } else if (this.schema.geometry) {
-      // Declarative geometry — generic builder
-      const hash = JSON.stringify(computed);
-      if (hash === this.lastComputedHash) return;
-      this.lastComputedHash = hash;
-      try {
         const geoData = this.geometryBuilder.build(this.schema.geometry, computed);
         if (geoData) this.viewer.updateModel(geoData, false);
-      } catch (e) {
-        console.error('Geometry build failed:', e);
       }
+    } catch (e) {
+      console.error('Preview render failed:', e);
     }
   }
 

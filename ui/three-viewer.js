@@ -285,8 +285,12 @@ export class ThreeViewer {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(geometryData.positions, 3));
 
-    if (geometryData.indices) {
-      geometry.setIndex(geometryData.indices);
+    if (geometryData.indices && geometryData.indices.length > 0) {
+      // Wrap in proper BufferAttribute for Three.js r128 compatibility
+      const idxArray = Array.isArray(geometryData.indices)
+        ? geometryData.indices
+        : Array.from(geometryData.indices);
+      geometry.setIndex(idxArray);
     }
 
     // Use provided normals if available, otherwise compute
