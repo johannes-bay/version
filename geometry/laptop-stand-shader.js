@@ -435,6 +435,16 @@ export function createLaptopStandShader() {
     uniforms.uBackPostHeight.value = back_platform_top + post_height_above;
     uniforms.uFrontPostHeight.value = front_platform_top + post_height_above;
     uniforms.uFilletRadius.value = fillet_radius || 0;
+
+    // Update bounding box so fitToModel works correctly.
+    // The vertex shader deforms unit geometry to these real dimensions,
+    // but Three.js can't see GPU-side positions — set the box manually.
+    const maxH = back_platform_top + post_height_above;
+    geometry.boundingBox = new THREE.Box3(
+      new THREE.Vector3(-(post_x + post_radius), 0, -(post_y + post_radius)),
+      new THREE.Vector3(post_x + post_radius, maxH, post_y + post_radius)
+    );
+    geometry.boundingSphere = null; // force recompute from box
   }
 
   return { mesh, updateParams, uniforms };
