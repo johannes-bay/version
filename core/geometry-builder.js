@@ -103,7 +103,48 @@ export class GeometryBuilder {
       return this._shellBox(w, d, h, this._resolve(def.shell, computed));
     }
 
+    if (def.holes) {
+      return this._boxWithHoles(w, d, h, def.holes, computed);
+    }
+
     return new THREE.BoxGeometry(w, h, d);
+  }
+
+  _boxWithHoles(w, d, h, holes, computed) {
+    // Rectangular shape with circular holes via ExtrudeGeometry
+    const hw = w / 2, hd = d / 2;
+    const shape = new THREE.Shape();
+    shape.moveTo(-hw, -hd);
+    shape.lineTo(hw, -hd);
+    shape.lineTo(hw, hd);
+    shape.lineTo(-hw, hd);
+    shape.lineTo(-hw, -hd);
+
+    for (const holeDef of holes) {
+      const hx = this._resolve(holeDef.x, computed);
+      const hz = this._resolve(holeDef.z, computed);
+      const hr = this._resolve(holeDef.radius, computed);
+      const hole = new THREE.Path();
+      const segs = 24;
+      for (let i = 0; i <= segs; i++) {
+        const angle = (i / segs) * Math.PI * 2;
+        const px = hx + Math.cos(angle) * hr;
+        const pz = hz + Math.sin(angle) * hr;
+        if (i === 0) hole.moveTo(px, pz);
+        else hole.lineTo(px, pz);
+      }
+      shape.holes.push(hole);
+    }
+
+    const geo = new THREE.ExtrudeGeometry(shape, {
+      depth: h,
+      bevelEnabled: false,
+    });
+
+    // ExtrudeGeometry extrudes along Z; rotate to Y-up and center
+    geo.rotateX(-Math.PI / 2);
+    geo.translate(0, h / 2, 0);
+    return geo;
   }
 
   _shellBox(w, d, h, t) {

@@ -46,27 +46,13 @@
       "type": "box",
       "width": "plate_width",
       "depth": "plate_depth",
-      "height": "plate_thickness"
-    },
-    "hole_1": {
-      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
-      "segments": 16,
-      "position": ["hole_x", 0, "hole_z"]
-    },
-    "hole_2": {
-      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
-      "segments": 16,
-      "position": ["-hole_x", 0, "hole_z"]
-    },
-    "hole_3": {
-      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
-      "segments": 16,
-      "position": ["hole_x", 0, "-hole_z"]
-    },
-    "hole_4": {
-      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
-      "segments": 16,
-      "position": ["-hole_x", 0, "-hole_z"]
+      "height": "plate_thickness",
+      "holes": [
+        { "x": "hole_x", "z": "hole_z", "radius": "hole_radius" },
+        { "x": "-hole_x", "z": "hole_z", "radius": "hole_radius" },
+        { "x": "hole_x", "z": "-hole_z", "radius": "hole_radius" },
+        { "x": "-hole_x", "z": "-hole_z", "radius": "hole_radius" }
+      ]
     }
   },
 
