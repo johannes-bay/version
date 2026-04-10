@@ -1,0 +1,77 @@
+{
+  "id": "brutalist-bench",
+  "name": "Brutalist Bench",
+  "version": "1.0.0",
+  "description": "Bench from steel plates — same component system, third configuration",
+
+  "parameters": {
+    "bench_width": {
+      "label": "Width", "default": 1200, "min": 600, "max": 2000,
+      "step": 50, "unit": "mm", "group": "dimensions"
+    },
+    "bench_depth": {
+      "label": "Depth", "default": 400, "min": 250, "max": 600,
+      "step": 50, "unit": "mm", "group": "dimensions"
+    },
+    "plate_thickness": {
+      "label": "Plate Thickness", "default": 6, "min": 3, "max": 15,
+      "step": 1, "unit": "mm", "group": "dimensions"
+    },
+    "bench_height": {
+      "label": "Seat Height", "default": 450, "min": 300, "max": 550,
+      "step": 10, "unit": "mm", "group": "dimensions"
+    },
+    "slab_legs": {
+      "label": "Slab Legs", "type": "boolean", "default": true,
+      "group": "legs"
+    },
+    "leg_inset": {
+      "label": "Leg Inset", "default": 50, "min": 0, "max": 200,
+      "step": 10, "unit": "mm", "group": "legs"
+    }
+  },
+
+  "derived": {
+    "leg_height": { "formula": "bench_height - plate_thickness", "description": "Leg height" },
+    "leg_center_y": { "formula": "leg_height / 2", "description": "Leg Y center" },
+    "slab_width": { "formula": "slab_legs ? bench_depth - plate_thickness * 2 : 50", "description": "Slab leg width (or post width)" },
+    "leg_x_left": { "formula": "-(bench_width / 2) + leg_inset + slab_width / 2", "description": "Left leg X" },
+    "leg_x_right": { "formula": "bench_width / 2 - leg_inset - slab_width / 2", "description": "Right leg X" },
+    "component_count": { "formula": "3", "description": "Total plates: seat + 2 legs" }
+  },
+
+  "geometry": {
+    "seat": {
+      "type": "box",
+      "width": "bench_width",
+      "depth": "bench_depth",
+      "height": "plate_thickness",
+      "position": [0, "bench_height", 0]
+    },
+    "leg_left": {
+      "type": "box",
+      "width": "slab_width",
+      "depth": "bench_depth",
+      "height": "leg_height",
+      "position": ["leg_x_left", "leg_center_y", 0]
+    },
+    "leg_right": {
+      "type": "box",
+      "width": "slab_width",
+      "depth": "bench_depth",
+      "height": "leg_height",
+      "position": ["leg_x_right", "leg_center_y", 0]
+    }
+  },
+
+  "groups": {
+    "dimensions": { "label": "Dimensions", "order": 1 },
+    "legs": { "label": "Legs", "order": 2 }
+  },
+
+  "presets": {
+    "standard": { "label": "Standard", "values": { "bench_width": 1200, "bench_depth": 400 } },
+    "long": { "label": "Long", "values": { "bench_width": 1800, "bench_depth": 350, "leg_inset": 100 } },
+    "compact": { "label": "Compact", "values": { "bench_width": 800, "bench_depth": 350 } }
+  }
+}

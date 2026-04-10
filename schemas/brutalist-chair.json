@@ -1,0 +1,100 @@
+{
+  "id": "brutalist-chair",
+  "name": "Brutalist Chair",
+  "version": "1.0.0",
+  "description": "Chair assembled from steel plates — each plate is a tracked component instance",
+
+  "parameters": {
+    "plate_size": {
+      "label": "Plate Size", "default": 400, "min": 250, "max": 600,
+      "step": 10, "unit": "mm", "group": "dimensions"
+    },
+    "plate_thickness": {
+      "label": "Plate Thickness", "default": 6, "min": 3, "max": 15,
+      "step": 1, "unit": "mm", "group": "dimensions"
+    },
+    "seat_height": {
+      "label": "Seat Height", "default": 450, "min": 300, "max": 550,
+      "step": 10, "unit": "mm", "group": "dimensions"
+    },
+    "back_height": {
+      "label": "Back Height", "default": 400, "min": 200, "max": 600,
+      "step": 10, "unit": "mm", "group": "dimensions"
+    },
+    "back_angle": {
+      "label": "Back Angle", "default": 5, "min": 0, "max": 20,
+      "step": 1, "unit": "deg", "group": "dimensions"
+    },
+    "leg_width": {
+      "label": "Leg Width", "default": 40, "min": 20, "max": 80,
+      "step": 5, "unit": "mm", "group": "legs"
+    }
+  },
+
+  "derived": {
+    "leg_height": { "formula": "seat_height - plate_thickness", "description": "Leg height" },
+    "back_rad": { "formula": "back_angle * PI / 180", "description": "Back angle in radians" },
+    "back_offset_z": { "formula": "-(plate_size / 2) + plate_thickness / 2", "description": "Back Z position" },
+    "back_center_y": { "formula": "seat_height + back_height / 2", "description": "Back Y center" },
+    "leg_offset": { "formula": "plate_size / 2 - leg_width / 2 - plate_thickness", "description": "Leg offset from center" },
+    "leg_center_y": { "formula": "leg_height / 2", "description": "Leg Y center" },
+    "component_count": { "formula": "6", "description": "Total plates: seat + back + 4 legs" }
+  },
+
+  "geometry": {
+    "seat": {
+      "type": "box",
+      "width": "plate_size",
+      "depth": "plate_size",
+      "height": "plate_thickness",
+      "position": [0, "seat_height", 0]
+    },
+    "back": {
+      "type": "box",
+      "width": "plate_size",
+      "depth": "plate_thickness",
+      "height": "back_height",
+      "position": [0, "back_center_y", "back_offset_z"],
+      "rotation": ["back_rad", 0, 0]
+    },
+    "leg_fl": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["leg_offset", "leg_center_y", "leg_offset"]
+    },
+    "leg_fr": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["-leg_offset", "leg_center_y", "leg_offset"]
+    },
+    "leg_bl": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["leg_offset", "leg_center_y", "-leg_offset"]
+    },
+    "leg_br": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["-leg_offset", "leg_center_y", "-leg_offset"]
+    }
+  },
+
+  "groups": {
+    "dimensions": { "label": "Dimensions", "order": 1 },
+    "legs": { "label": "Legs", "order": 2 }
+  },
+
+  "presets": {
+    "dining": { "label": "Dining", "values": { "plate_size": 400, "seat_height": 450, "back_height": 400 } },
+    "lounge": { "label": "Lounge", "values": { "plate_size": 500, "seat_height": 350, "back_height": 500, "back_angle": 12 } },
+    "bar": { "label": "Bar Stool", "values": { "plate_size": 350, "seat_height": 650, "back_height": 250, "leg_width": 30 } }
+  }
+}

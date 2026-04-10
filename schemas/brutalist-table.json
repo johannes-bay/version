@@ -1,0 +1,102 @@
+{
+  "id": "brutalist-table",
+  "name": "Brutalist Table",
+  "version": "1.0.0",
+  "description": "Table assembled from steel plates — same components as the chair, different configuration",
+
+  "parameters": {
+    "top_width": {
+      "label": "Top Width", "default": 800, "min": 400, "max": 1500,
+      "step": 50, "unit": "mm", "group": "dimensions"
+    },
+    "top_depth": {
+      "label": "Top Depth", "default": 400, "min": 300, "max": 1000,
+      "step": 50, "unit": "mm", "group": "dimensions"
+    },
+    "plate_thickness": {
+      "label": "Plate Thickness", "default": 6, "min": 3, "max": 15,
+      "step": 1, "unit": "mm", "group": "dimensions"
+    },
+    "table_height": {
+      "label": "Table Height", "default": 720, "min": 400, "max": 1100,
+      "step": 10, "unit": "mm", "group": "dimensions"
+    },
+    "leg_width": {
+      "label": "Leg Width", "default": 50, "min": 20, "max": 100,
+      "step": 5, "unit": "mm", "group": "legs"
+    },
+    "stretcher": {
+      "label": "Cross Stretcher", "type": "boolean", "default": true,
+      "group": "structure"
+    }
+  },
+
+  "derived": {
+    "leg_height": { "formula": "table_height - plate_thickness", "description": "Leg height" },
+    "leg_offset_x": { "formula": "top_width / 2 - leg_width / 2 - plate_thickness", "description": "Leg X offset" },
+    "leg_offset_z": { "formula": "top_depth / 2 - leg_width / 2 - plate_thickness", "description": "Leg Z offset" },
+    "leg_center_y": { "formula": "leg_height / 2", "description": "Leg Y center" },
+    "stretcher_y": { "formula": "table_height * 0.3", "description": "Stretcher height" },
+    "stretcher_width": { "formula": "top_width - leg_width * 2 - plate_thickness * 4", "description": "Stretcher width" },
+    "component_count": { "formula": "stretcher ? 6 : 5", "description": "Total plates" }
+  },
+
+  "geometry": {
+    "top": {
+      "type": "box",
+      "width": "top_width",
+      "depth": "top_depth",
+      "height": "plate_thickness",
+      "position": [0, "table_height", 0]
+    },
+    "leg_fl": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["leg_offset_x", "leg_center_y", "leg_offset_z"]
+    },
+    "leg_fr": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["-leg_offset_x", "leg_center_y", "leg_offset_z"]
+    },
+    "leg_bl": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["leg_offset_x", "leg_center_y", "-leg_offset_z"]
+    },
+    "leg_br": {
+      "type": "box",
+      "width": "leg_width",
+      "depth": "leg_width",
+      "height": "leg_height",
+      "position": ["-leg_offset_x", "leg_center_y", "-leg_offset_z"]
+    },
+    "cross_stretcher": {
+      "type": "box",
+      "width": "stretcher_width",
+      "depth": "plate_thickness",
+      "height": "leg_width",
+      "position": [0, "stretcher_y", 0],
+      "visible": "stretcher"
+    }
+  },
+
+  "groups": {
+    "dimensions": { "label": "Dimensions", "order": 1 },
+    "legs": { "label": "Legs", "order": 2 },
+    "structure": { "label": "Structure", "order": 3 }
+  },
+
+  "presets": {
+    "desk": { "label": "Desk", "values": { "top_width": 1200, "top_depth": 600, "table_height": 720 } },
+    "dining": { "label": "Dining Table", "values": { "top_width": 1400, "top_depth": 800, "table_height": 750 } },
+    "coffee": { "label": "Coffee Table", "values": { "top_width": 800, "top_depth": 500, "table_height": 400, "leg_width": 40 } },
+    "side": { "label": "Side Table", "values": { "top_width": 400, "top_depth": 400, "table_height": 550 } }
+  }
+}

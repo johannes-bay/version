@@ -1,0 +1,83 @@
+{
+  "id": "metal-plate",
+  "name": "Metal Plate",
+  "version": "1.0.0",
+  "description": "Square steel plate with 4 threaded corner holes — the base component for brutalist assemblies",
+
+  "parameters": {
+    "plate_width": {
+      "label": "Width", "default": 400, "min": 50, "max": 800,
+      "step": 10, "unit": "mm", "group": "plate"
+    },
+    "plate_depth": {
+      "label": "Depth", "default": 400, "min": 50, "max": 800,
+      "step": 10, "unit": "mm", "group": "plate"
+    },
+    "plate_thickness": {
+      "label": "Thickness", "default": 6, "min": 2, "max": 20,
+      "step": 1, "unit": "mm", "group": "plate"
+    },
+    "hole_thread": {
+      "label": "Hole Thread", "type": "select",
+      "options": ["M6", "M8", "M10", "M12"],
+      "default": "M8", "group": "holes"
+    },
+    "hole_inset": {
+      "label": "Hole Inset", "default": 30, "min": 15, "max": 80,
+      "step": 5, "unit": "mm", "group": "holes"
+    }
+  },
+
+  "derived": {
+    "hole_diameter": { "formula": "ISO_MAJOR[hole_thread]", "description": "Hole diameter" },
+    "hole_radius": { "formula": "hole_diameter / 2", "description": "Hole radius" },
+    "pitch": { "formula": "ISO_PITCH[hole_thread]", "description": "Thread pitch" },
+    "hole_x": { "formula": "plate_width / 2 - hole_inset", "description": "Hole X offset" },
+    "hole_z": { "formula": "plate_depth / 2 - hole_inset", "description": "Hole Z offset" }
+  },
+
+  "constants": {
+    "ISO_MAJOR": { "M6": 6.0, "M8": 8.0, "M10": 10.0, "M12": 12.0 },
+    "ISO_PITCH": { "M6": 1.0, "M8": 1.25, "M10": 1.5, "M12": 1.75 }
+  },
+
+  "geometry": {
+    "plate": {
+      "type": "box",
+      "width": "plate_width",
+      "depth": "plate_depth",
+      "height": "plate_thickness"
+    },
+    "hole_1": {
+      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
+      "segments": 16,
+      "position": ["hole_x", 0, "hole_z"]
+    },
+    "hole_2": {
+      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
+      "segments": 16,
+      "position": ["-hole_x", 0, "hole_z"]
+    },
+    "hole_3": {
+      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
+      "segments": 16,
+      "position": ["hole_x", 0, "-hole_z"]
+    },
+    "hole_4": {
+      "type": "cylinder", "radius": "hole_radius", "height": "plate_thickness + 1",
+      "segments": 16,
+      "position": ["-hole_x", 0, "-hole_z"]
+    }
+  },
+
+  "groups": {
+    "plate": { "label": "Plate Dimensions", "order": 1 },
+    "holes": { "label": "Mounting Holes", "order": 2 }
+  },
+
+  "presets": {
+    "small": { "label": "Small (200mm)", "values": { "plate_width": 200, "plate_depth": 200, "hole_inset": 20 } },
+    "medium": { "label": "Medium (400mm)", "values": { "plate_width": 400, "plate_depth": 400 } },
+    "large": { "label": "Large (600mm)", "values": { "plate_width": 600, "plate_depth": 600, "hole_inset": 50 } }
+  }
+}

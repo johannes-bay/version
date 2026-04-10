@@ -788,6 +788,61 @@
       "schema": "./schemas/adjustment-screw.json",
       "tags": [],
       "category": "general"
+    },
+    {
+      "id": "metal-plate",
+      "name": "Metal Plate",
+      "description": "Square steel plate with 4 threaded corner holes \u2014 base component for brutalist assemblies",
+      "schema": "./schemas/metal-plate.json",
+      "tags": [
+        "steel",
+        "plate",
+        "component",
+        "brutalist"
+      ],
+      "category": "components"
+    },
+    {
+      "id": "brutalist-chair",
+      "name": "Brutalist Chair",
+      "description": "Chair assembled from steel plates",
+      "schema": "./schemas/brutalist-chair.json",
+      "tags": [
+        "brutalist",
+        "furniture",
+        "chair",
+        "assembly",
+        "steel"
+      ],
+      "category": "furniture"
+    },
+    {
+      "id": "brutalist-table",
+      "name": "Brutalist Table",
+      "description": "Table assembled from steel plates",
+      "schema": "./schemas/brutalist-table.json",
+      "tags": [
+        "brutalist",
+        "furniture",
+        "table",
+        "assembly",
+        "steel"
+      ],
+      "category": "furniture"
+    },
+    {
+      "id": "brutalist-bench",
+      "name": "Brutalist Bench",
+      "description": "Bench from steel plates",
+      "schema": "./schemas/brutalist-bench.json",
+      "tags": [
+        "brutalist",
+        "furniture",
+        "bench",
+        "assembly",
+        "steel"
+      ],
+      "category": "furniture"
     }
   ]
 }
